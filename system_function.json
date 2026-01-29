@@ -1,0 +1,23 @@
+[
+    {
+        "name": "get_query",
+        "description": "Extract full user query.",
+        "parameters": {
+            "type": "OBJECT",
+            "properties": {
+                "query": {
+                    "type": "STRING",
+                    "description": "Full user query. Query must in english, and medical related."
+                }
+            },
+            "required": ["query"]
+        },
+        "response": {
+            "type": "ARRAY",
+            "items": {
+                "type": "STRING"
+            },
+            "description": "The detailed query steps or extracted interpretation."
+        }
+    }
+]

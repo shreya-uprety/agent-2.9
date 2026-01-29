@@ -1,0 +1,62 @@
+{
+    "title": "Radiology Data Retrieval for Sarah Miller",
+    "description": "Retrieve radiology diagnostic reports for Sarah Miller to facilitate clinical review. The process involves preparing specific retrieval parameters, executing a detailed API call, and validating the returned data.",
+    "todos": [
+        {
+            "id": "task-prep-rad-data",
+            "text": "Prepare radiology retrieval parameters for Sarah Miller",
+            "status": "pending",
+            "agent": "Data Analyst Agent",
+            "subTodos": [
+                {
+                    "text": "Confirm patient identifier for Sarah Miller",
+                    "status": "pending"
+                },
+                {
+                    "text": "Determine correct category code for radiology (e.g., LP29684-5)",
+                    "status": "pending"
+                },
+                {
+                    "text": "Set modality filters (e.g., CT, MRI, X-Ray)",
+                    "status": "pending"
+                },
+                {
+                    "text": "Apply status filter (e.g., final)",
+                    "status": "pending"
+                },
+                {
+                    "text": "Set date filters or sorting preferences",
+                    "status": "pending"
+                },
+                {
+                    "text": "Verify authentication token for API access",
+                    "status": "pending"
+                }
+            ]
+        },
+        {
+            "id": "task-fetch-rad-data",
+            "text": "curl -X GET 'https://api.bedfordshirehospitals.nhs.uk/fhir-prd/r4/DiagnosticReport?patient=--PATIENT_ID--&category=http://loinc.org|LP29684-5&status=final&_sort=-date'",
+            "status": "pending",
+            "agent": "Consolidator Agent",
+            "subTodos": [
+                {
+                    "text": "Execute HTTP request with prepared parameters",
+                    "status": "pending"
+                },
+                {
+                    "text": "Check HTTP status code of the response",
+                    "status": "pending"
+                },
+                {
+                    "text": "Validate response JSON structure",
+                    "status": "pending"
+                },
+                {
+                    "text": "Extract and organize radiology report data",
+                    "status": "pending"
+                }
+            ]
+        }
+    ]
+}

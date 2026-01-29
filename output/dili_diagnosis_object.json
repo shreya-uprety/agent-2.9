@@ -1,0 +1,172 @@
+{
+    "patientInformation": {
+        "name": "Sarah Miller",
+        "mrn": "SM43850603",
+        "dateOfBirth": "1981-06-03",
+        "age": 43,
+        "sex": "Female"
+    },
+    "presentingComplaint": "New onset jaundice, dark urine, and severe nausea leading to anorexia.",
+    "medicalHistory": {
+        "conditions": [
+            "Type 2 Diabetes Mellitus",
+            "Essential Hypertension",
+            "Rheumatoid Arthritis",
+            "Metabolic Dysfunction-associated Steatotic Liver Disease (MASLD/MASH)",
+            "Class I Obesity"
+        ],
+        "allergies": [
+            "Methotrexate (severe DILI – permanent contraindication)"
+        ],
+        "socialHistory": "Alcohol consumption of 12 units/week."
+    },
+    "medications": {
+        "chronicPriorToEvent": [
+            "Metformin 1000 mg PO BD",
+            "Ramipril 5 mg PO daily"
+        ],
+        "initiatedAtAcuteEvent": "Methotrexate 7.5 mg PO weekly (started 2024-06-03, dose reduced to 5 mg weekly on 2024-07-15, discontinued 2024-08-12)"
+    },
+    "keyLaboratoryFindings": {
+        "encounterDate": "2024-08-15",
+        "results": [
+            {
+                "test": "ALT",
+                "value": "420 U/L",
+                "flag": "critical",
+                "reference": "7-56",
+                "note": "↑↑ (Previously 490 U/L)"
+            },
+            {
+                "test": "AST",
+                "value": "350 U/L",
+                "flag": "critical",
+                "reference": "10-40",
+                "note": "↑↑ (Previously 350 U/L)"
+            },
+            {
+                "test": "Total Bilirubin",
+                "value": "190 μmol/L",
+                "flag": "critical",
+                "reference": "0-21",
+                "note": "↑↑ (Peak, previously 110 μmol/L)"
+            },
+            {
+                "test": "INR",
+                "value": "1.1",
+                "flag": "normal",
+                "reference": "0.8-1.2",
+                "note": "Normal"
+            }
+        ]
+    },
+    "diagnosis": {
+        "main": "Severe Drug-Induced Liver Injury (Methotrexate-related) with Cholestatic Component",
+        "causality": "Methotrexate is the primary suspected drug causing severe hepatocellular DILI, supported by a RUCAM score of 9 (highly probable).",
+        "mechanism": "Methotrexate toxicity leading to direct hepatocellular injury and oxidative stress, superimposed on underlying MASLD/MASH, which likely increased susceptibility."
+    },
+    "differentialDiagnosisTracker": {
+        "diagnoses": [
+            {
+                "name": "Drug-Induced Liver Injury (DILI) - Methotrexate",
+                "status": "PRIMARY",
+                "notes": "Strongly supported by timeline, lab values, RUCAM score, and exclusion of other causes."
+            },
+            {
+                "name": "Metabolic Dysfunction-associated Steatotic Liver Disease (MASLD/MASH) flare",
+                "status": "INVESTIGATE",
+                "notes": "Underlying condition likely contributed to severity and susceptibility."
+            }
+        ],
+        "ruledOut": [
+            {
+                "name": "Acute Viral Hepatitis",
+                "status": "RULED OUT",
+                "notes": "Negative serology (HBV, HCV, HEV)."
+            },
+            {
+                "name": "Autoimmune Hepatitis",
+                "status": "RULED OUT",
+                "notes": "Negative serology (ANA, ASMA, LKM-1) and normal IgG."
+            },
+            {
+                "name": "Biliary Obstruction",
+                "status": "RULED OUT",
+                "notes": "Ultrasound showed normal CBD and no dilation."
+            },
+            {
+                "name": "Ischemic Hepatitis",
+                "status": "RULED OUT",
+                "notes": "No history of shock or significant hemodynamic instability."
+            }
+        ]
+    },
+    "easlAssessment": {
+        "overallImpression": "Sarah Miller developed severe DILI, characterized by a hepatocellular pattern, following Methotrexate (MTX) initiation. The injury was likely exacerbated by her underlying MASLD, and MTX was inappropriately continued at a reduced dose despite ALT elevation, leading to a crisis presentation with jaundice and significantly elevated transaminases. Her RUCAM score suggests high probability of MTX-induced DILI.",
+        "diliDiagnosticCriteriaMet": [
+            {
+                "criterion": "ALT ≥ 5 × ULN",
+                "status": "MET",
+                "details": "ALT reached 490 U/L on 2024-08-12, which is 12.25 times the upper limit of normal (ULN) of 40 U/L."
+            },
+            {
+                "criterion": "ALT ≥ 3 × ULN with bilirubin ≥ 2 × ULN",
+                "status": "MET",
+                "details": "On 2024-08-12, ALT was 490 U/L (12.25 × ULN) and total bilirubin was 110 µmol/L (approx. 6.4 mg/dL, which is > 2x ULN of 1.2 mg/dL if assumed ULN ~1mg/dL)."
+            },
+            {
+                "criterion": "R-ratio classification rules",
+                "status": "MET",
+                "details": "The R-ratio (ALT/AST divided by ULN ALT/AST) would be < 2 in the early phase, and later stages present with ALT > AST. At peak ALT of 490 (12.25x ULN) and AST of 350 (9.9x ULN), the pattern is predominantly hepatocellular."
+            }
+        ],
+        "causativeAgentAssessment": [
+            {
+                "agent": "Methotrexate",
+                "role": "PRIMARY TRIGGER",
+                "rationale": "Temporal association: DILI onset approximately 6 weeks after MTX initiation (ALT 185 U/L on 2024-07-15). Peak ALT and bilirubin occurred while on MTX. Known hepatotoxin with a documented risk of idiosyncratic DILI, especially in patients with MASLD. The reduction in dose from 7.5mg to 5mg weekly, rather than cessation, on 2024-07-15, likely contributed to the worsening injury seen by 2024-08-12. The RUCAM score of 9 supports high probability of causality."
+            },
+            {
+                "agent": "Metformin",
+                "role": "UNLIKELY",
+                "rationale": "Long-term use with no prior liver enzyme abnormalities suggestive of Metformin-induced DILI. Not a known significant hepatotoxin."
+            },
+            {
+                "agent": "Ramipril",
+                "role": "UNLIKELY",
+                "rationale": "Long-term use with no prior liver enzyme abnormalities. Not a known significant hepatotoxin."
+            },
+            {
+                "agent": "Ibuprofen",
+                "role": "UNLIKELY",
+                "rationale": "Intermittent use and prior normalization of LFTs. Although NSAIDs can cause liver injury, the temporal profile and pattern of injury are more consistent with MTX."
+            }
+        ],
+        "severityAssessment": {
+            "overallSeverity": "SEVERE DILI",
+            "features": [
+                "Jaundice (Total Bilirubin peaked at 190 µmol/L)",
+                "ALT ≥ 5 × ULN (peaked at 490 U/L)",
+                "INR stable (preserved synthetic function)",
+                "No hepatic encephalopathy noted",
+                "Significant weight loss (~4.5 kg)"
+            ],
+            "prognosisNote": "The patient experienced severe hepatocellular injury with jaundice and marked transaminitis, meeting EASL criteria for severe DILI. While synthetic function was preserved and encephalopathy was absent, the steep rise in bilirubin and ALT, coupled with the history of MASLD, warrants close monitoring and careful consideration of alternative treatments for rheumatoid arthritis."
+        },
+        "exclusionOfAlternativeCausesRequired": [
+            "Viral hepatitis (HAV, HBV, HCV, HEV)",
+            "Autoimmune hepatitis",
+            "Biliary obstruction",
+            "Alcohol-related disease",
+            "Metabolic or inherited disorders"
+        ],
+        "localGuidelinesComparison": {
+            "status": "GAP IDENTIFIED",
+            "details": "The provided data indicates patient management was guided by clinical protocols and standard DILI assessment tools (RUCAM, CTCAE). No specific local guidelines were referenced or found to be inadequate for direct comparison."
+        },
+        "references": [
+            "EASL Clinical Practice Guidelines: Drug-Induced Liver Injury – Diagnostic Criteria",
+            "EASL Clinical Practice Guidelines: Drug-Induced Liver Injury – Management"
+        ]
+    }
+}

@@ -1,0 +1,95 @@
+{
+    "patientData": {
+        "name": "Sarah Miller",
+        "mrn": "SM43850603",
+        "age_sex": "43-year-old Female",
+        "date_of_summary": "November 21, 2025",
+        "one_sentence_impression": "Severe Methotrexate-induced liver injury in a patient with underlying MASLD, requiring hospitalization and cessation of Methotrexate, with ongoing management for cholestasis and Rheumatoid Arthritis.",
+        "clinical_context_baseline": {
+            "comorbidities": [
+                "Type 2 Diabetes Mellitus",
+                "Essential Hypertension",
+                "Rheumatoid Arthritis",
+                "Metabolic Dysfunction-associated Steatotic Liver Disease (MASLD/MASH)",
+                "Class I Obesity"
+            ],
+            "key_baseline_labs": "Normal LFTs prior to Methotrexate initiation in May 2024 (ALT 35 U/L). HbA1c was elevated (56-58 mmol/mol).",
+            "social_history": "Consumes 12 units of alcohol per week."
+        },
+        "suspect_drug_timeline": {
+            "chief_complaint": "New onset jaundice, dark urine, severe nausea, and anorexia.",
+            "hopi_significant_points": "Initiated Methotrexate 7.5 mg weekly for RA on 2024-06-03. Dose reduced to 5 mg weekly on 2024-07-15 due to elevated ALT (185 U/L). Presented to ED on 2024-08-12 with jaundice, dark urine, nausea, anorexia, and significant weight loss (~4.5 kg).",
+            "chronic_medications": [
+                "Metformin 1000 mg PO BD",
+                "Ramipril 5 mg PO daily"
+            ],
+            "acute_medication_onset": "Methotrexate 7.5 mg weekly started on 2024-06-03, reduced to 5 mg weekly on 2024-07-15, discontinued on 2024-08-12.",
+            "possibilities_for_dili": [
+                "Methotrexate"
+            ]
+        },
+        "rule_out_complete": {
+            "viral_hepatitis": "Negative serology (HAV, HBV, HCV, HEV).",
+            "autoimmune": "Negative serology (ANA, ASMA, LKM-1) and normal IgG.",
+            "other_competing_dx_ruled_out": "Ultrasound showed no biliary obstruction. No signs of ischemic hepatitis or sepsis-associated liver injury. Metabolic causes (e.g., Wilson's disease) unlikely given age and presentation."
+        },
+        "injury_pattern_trends": {
+            "pattern": "Hepatocellular with developing cholestasis.",
+            "hys_law": "ALT 12x ULN and Bilirubin 6.4x ULN meets Hy's Law criteria.",
+            "meld_na": "MELD score 9 on 2024-08-12, 10 on 2024-08-15. Indicates moderate severity.",
+            "lft_data_peak_onset": {
+                "ALT": "490 U/L",
+                "AST": "350 U/L",
+                "Alk_Phos": "130 U/L",
+                "T_Bili": "190 μmol/L",
+                "INR": "1.1"
+            },
+            "lft_sparklines_trends": "Initial mild ALT elevation in March 2024 normalized by May 2024. Significant rise in ALT from 185 U/L (July 15) to 490 U/L (August 12). Bilirubin rose from normal to 110 μmol/L (August 12) and peaked at 190 μmol/L (August 15).",
+            "complications": [
+                "Severe hepatocellular DILI",
+                "Cholestasis",
+                "Jaundice",
+                "Significant weight loss"
+            ],
+            "noh_graz_law": "Not applicable (Methotrexate is not paracetamol/APAP)."
+        },
+        "severity_prognosis": {
+            "severity_features": [
+                "ALT 12x ULN",
+                "Bilirubin 8.5x ULN",
+                "Jaundice",
+                "Hy's Law criteria met"
+            ],
+            "prognosis_statement": "The patient experienced severe DILI with marked hepatocellular injury and cholestasis. While synthetic function was preserved and no encephalopathy occurred, the severity warrants intensive monitoring. Prognosis depends on MTX cessation and management of underlying MASLD. Long-term risk of fibrosis progression exists."
+        },
+        "key_diagnostics": {
+            "imaging_performed": "Abdominal Ultrasound on 2024-08-12 showed mild steatosis consistent with MASLD, but no evidence of biliary obstruction.",
+            "biopsy": "Not performed.",
+            "methotrexate_level": "Not specified in the provided data."
+        },
+        "management_monitoring": {
+            "stopped_culprit_drugs": [
+                "Methotrexate"
+            ],
+            "active_treatments": [
+                "N-Acetylcysteine (NAC) IV protocol (completed)",
+                "Ursodeoxycholic Acid (UDCA) 500 mg PO BID"
+            ],
+            "consults_initiated": [
+                "Hepatology",
+                "Rheumatology"
+            ],
+            "nutrition": "Patient advised on lifestyle modifications. No specific dietary plan detailed.",
+            "vte_ppx": "Not specified in the provided data.",
+            "causality_rucam": "RUCAM score of 9, indicating a 'highly probable' causal relationship between Methotrexate and DILI.",
+            "monitoring_plan": [
+                "Daily INR until ALT < 150 U/L",
+                "Neurological assessments every four hours",
+                "Fibroscan in three months",
+                "Monitor LFTs and FBC regularly",
+                "Transition to non-hepatotoxic DMARD for RA management"
+            ]
+        },
+        "current_status_last_48h": "On 2024-08-15, patient remained jaundiced with peak bilirubin, but ALT was beginning to decline. She was alert with preserved synthetic function and was receiving UDCA and completing NAC. Plan included Fibroscan and Rheumatology consultation for alternative RA treatment."
+    }
+}

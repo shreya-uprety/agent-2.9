@@ -1,0 +1,292 @@
+import requests
+import json
+import time
+import aiohttp
+import helper_model
+import os
+import config
+from dotenv import load_dotenv
+load_dotenv()
+
+
+BASE_URL = os.getenv("CANVAS_URL", "https://board-v24problem.vercel.app")
+print("#### canvas_ops.py CANVAS_URL : ",BASE_URL)
+
+with open("object_desc.json", "r", encoding="utf-8") as f:
+    object_desc = json.load(f)
+object_desc_data = {}
+existing_desc_ids = []
+for o in object_desc:
+    object_desc_data[o['id']] = o['description']
+    existing_desc_ids.append(o['id'])
+
+def board_items_process(data):
+    exclude_keys = ["x","y","width","height","createdAt","updatedAt","color","rotation", "draggable"]
+    clean_data = []
+    for item in data:
+        if item.get('type') == 'ehrHub' or item.get('type') == 'zone' or item.get('type') == 'button':
+            pass
+        else:   
+            clean_item = {}
+            for k,v in item.items():
+                if k not in exclude_keys:
+                    clean_item[k] = v
+            clean_data.append(clean_item)
+
+    for d in clean_data:
+        if not d: 
+            continue
+        d_id = d.get('id', '')
+        if 'raw' in d_id or 'single-encounter' in d_id or 'iframe' in d_id:
+            if d.get('id') in existing_desc_ids:
+                d['description'] = object_desc_data.get(d.get('id'), '')
+        elif d.get('id') == "dashboard-item-chronomed-2":
+            d['description'] = "This timeline functions similarly to a medication timeline, but with an expanded DILI assessment focus. It presents a chronological view of the patient’s clinical course, aligning multiple time-bound elements to support hepatotoxicity monitoring. Like the medication timeline tracks periods of drug exposure, this object also visualises medication start/stop dates, dose changes, and hepatotoxic risk levels. In addition, it integrates encounter history, longitudinal liver function test trends, and critical clinical events. Temporal relationships are highlighted to show how changes in medication correlate with laboratory abnormalities and clinical deterioration, providing causality links relevant to DILI analysis. The timeline is designed to facilitate retrospective assessment and ongoing monitoring by showing when key events occurred in relation to medication use and liver injury progression."
+        elif 'dashboard-item' in d_id:
+            if d.get('type') == 'component':
+                if d.get('id') in existing_desc_ids:
+                    d['description'] = object_desc_data.get(d.get('id'), '')
+        elif d.get('id') == "sidebar-1":
+            pass
+        elif d.get('type') == 'component':
+                if d.get('id') in existing_desc_ids:
+                    d['description'] = object_desc_data.get(d.get('id'), '')
+
+    return clean_data
+
+def get_board_items():
+    url = BASE_URL + "/api/board-items"
+    data = []
+    
+    # 1. Try fetching from API
+    try:
+        print(f"🌍 Fetching from: {url}")
+        response = requests.get(url, timeout=5)
+        
+        if response.status_code == 200:
+            try:
+                data = response.json()
+                data = board_items_process(data)
+                # Save to cache
+                os.makedirs(config.output_dir, exist_ok=True)
+                with open(f"{config.output_dir}/board_items.json", "w", encoding="utf-8") as f:
+                    json.dump(data, f, indent=4)
+                print(f"✅ Fetched {len(data)} items from API")
+                return data
+            except json.JSONDecodeError:
+                print(f"❌ Invalid JSON response from API. Text: {response.text[:100]}...")
+        else:
+            print(f"⚠️ API Error: Status {response.status_code}")
+            
+    except Exception as e:
+        print(f"⚠️ API Connection failed: {e}")
+
+        # 2. Fallback to local file
+        local_path = f"{config.output_dir}/board_items.json"
+        if os.path.exists(local_path):
+            print(f"📂 Falling back to local cache: {local_path}")
+            try:
+                with open(local_path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    print(f"✅ Loaded {len(data)} items from cache")
+                    return data
+            except Exception as e:
+                print(f"❌ Failed to load local cache: {e}")
+            
+    return []
+
+
+async def initiate_easl_iframe(question):
+    url = BASE_URL + "/api/send-to-easl"
+    payload = {
+        "query": question,
+        "metadata": {
+            "source": "voice"
+        }
+    }
+
+    headers = {
+        "Content-Type": "application/json"
+    }
+    with open(f"{config.output_dir}/initiate_iframe_payload.json", "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=4)
+    response = requests.post(url, json=payload, headers=headers)
+    print("Initiate EASL iframe :", response.status_code)
+    data = response.json()
+    with open(f"{config.output_dir}/initiate_iframe_response.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+    return data
+
+async def get_agent_question(question):
+    context_str = await helper_model.generate_question(question)
+
+
+    return context_str
+
+async def get_agent_context(question):
+    context_str = await helper_model.generate_context(question)
+
+
+    return context_str
+
+async def get_agent_answer(todo):
+    data = await helper_model.generate_response(todo)
+
+    result = {}
+    result['content'] = data.get('answer', '')
+    if todo.get('title'):
+        result['title'] = todo.get('title', '').lower().replace("to do", "Result").capitalize()
+
+    return result
+
+
+
+async def focus_item(item_id):
+
+    url = BASE_URL + "/api/focus"
+    payload = {
+        "objectId": item_id,
+        "focusOptions": {
+            "zoom": 0.5
+        }
+    }
+    print("Focus URL:",url)
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=payload) as response:
+            with open(f"{config.output_dir}/focus_payload.json", "w", encoding="utf-8") as f:
+                json.dump(payload, f, ensure_ascii=False, indent=4)
+            data = await response.json()
+            with open(f"{config.output_dir}/focus_response.json", "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=4)
+            return data
+
+async def create_todo(payload_body):
+
+    url = BASE_URL + "/api/enhanced-todo"
+
+    payload = payload_body
+
+    # response = requests.post(url, json=payload)
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=payload) as response:
+            with open(f"{config.output_dir}/todo_payload.json", "w", encoding="utf-8") as f:
+                json.dump(payload, f, ensure_ascii=False, indent=4)
+            data = await response.json()
+            with open(f"{config.output_dir}/todo_response.json", "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=4)
+            return data
+
+async def update_todo(payload):
+    url = BASE_URL + "/api/update-todo-status"
+
+    # response = requests.post(url, json=payload)
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=payload) as response:
+            with open(f"{config.output_dir}/upadate_todo_payload.json", "w", encoding="utf-8") as f:
+                json.dump(payload, f, ensure_ascii=False, indent=4)
+            data = await response.json()
+            # print("Update todo :", data)
+            with open(f"{config.output_dir}/upadate_todo_response.json", "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=4)
+            return data
+
+async def create_lab(payload):
+   
+    url = BASE_URL + "/api/lab-results"
+    
+
+    # response = requests.post(url, json=payload)
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=payload) as response:
+            with open(f"{config.output_dir}/lab_payload.json", "w", encoding="utf-8") as f:
+                json.dump(payload, f, ensure_ascii=False, indent=4)
+
+            data = await response.json()
+
+            with open(f"{config.output_dir}/lab_response.json", "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=4)
+            return data
+
+async def create_result(agent_result):
+    url = BASE_URL + "/api/agents"
+    
+    payload = agent_result
+
+    # response = requests.post(url, json=payload)
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=payload) as response:
+            with open(f"{config.output_dir}/agentres_payload.json", "w", encoding="utf-8") as f:
+                json.dump(payload, f, ensure_ascii=False, indent=4)
+
+            data = await response.json()
+
+            with open(f"{config.output_dir}/agentres_response.json", "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=4)
+            return data
+        
+def create_diagnosis(payload):
+    print("Start create object")
+    url = BASE_URL + "/api/dili-diagnostic"
+    payload['zone'] = "dili-analysis-zone"
+    with open(f"{config.output_dir}/diagnosis_create_payload.json", "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=4)
+    response = requests.post(url, json=payload)
+    print(response.status_code)
+    with open(f"{config.output_dir}/diagnosis_create_response.json", "w", encoding="utf-8") as f:
+        json.dump(response.json(), f, ensure_ascii=False, indent=4)    
+    # async with aiohttp.ClientSession() as session:
+    #     async with session.post(url, json=payload) as response:
+    #         with open(f"{config.output_dir}/diagnosis_create_payload.json", "w", encoding="utf-8") as f:
+    #             json.dump(payload, f, ensure_ascii=False, indent=4)
+
+    #         data = await response.json()
+    #         print("Object created")
+    #         with open(f"{config.output_dir}/diagnosis_create_response.json", "w", encoding="utf-8") as f:
+    #             json.dump(data, f, ensure_ascii=False, indent=4)
+    #         return data
+        
+async def create_report(payload):
+    url = BASE_URL + "/api/patient-report"
+    payload['zone'] = "dili-analysis-zone"
+
+    # response = requests.post(url, json=payload)
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=payload) as response:
+            with open(f"{config.output_dir}/report_create_payload.json", "w", encoding="utf-8") as f:
+                json.dump(payload, f, ensure_ascii=False, indent=4)
+
+            data = await response.json()
+
+            with open(f"{config.output_dir}/report_create_response.json", "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=4)
+            return data
+        
+async def create_schedule(payload):
+    url = BASE_URL + "/api/schedule"
+
+    # response = requests.post(url, json=payload)
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=payload) as response:
+            with open(f"{config.output_dir}/schedule_create_payload.json", "w", encoding="utf-8") as f:
+                json.dump(payload, f, ensure_ascii=False, indent=4)
+
+            data = await response.json()
+
+            with open(f"{config.output_dir}/schedule_create_response.json", "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=4)
+            return data
+        
+async def create_notification(payload):
+    url = BASE_URL + "/api/notification"
+
+    # response = requests.post(url, json=payload)
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=payload) as response:
+            with open(f"{config.output_dir}/notification_create_payload.json", "w", encoding="utf-8") as f:
+                json.dump(payload, f, ensure_ascii=False, indent=4)
+
+            data = await response.json()
+
+            with open(f"{config.output_dir}/notification_create_response.json", "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=4)
+            return data

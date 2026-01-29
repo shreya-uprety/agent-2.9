@@ -1,0 +1,8 @@
+{
+    "success": true,
+    "message": "Query sent to EASL",
+    "query": "Sarah Miller, a 43-year-old female with a history of Type 2 Diabetes Mellitus, Essential Hypertension, Rheumatoid Arthritis, and Metabolic Dysfunction-associated Steatotic Liver Disease (MASLD/MASH), was initiated on Methotrexate for Rheumatoid Arthritis on 2024-06-03. Despite a dose reduction on 2024-07-15, she developed severe liver injury, presenting with jaundice, significantly elevated ALT (peak 490 U/L), AST (peak 350 U/L), and bilirubin (peak 190 μmol/L) by August 2024, leading to Methotrexate discontinuation on 2024-08-12. She received a 3-bag N-Acetylcysteine (NAC) IV protocol and was started on Ursodeoxycholic Acid (UDCA). She has a documented permanent contraindication to Methotrexate due to the severity of the resulting DILI. What is the DILI diagnosis according to EASL guidelines?",
+    "metadata": {
+        "source": "voice"
+    }
+}
