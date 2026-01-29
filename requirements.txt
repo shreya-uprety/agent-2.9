@@ -8,3 +8,5 @@ fastapi
 uvicorn
 pyaudio
 google-genai
+pandas
+scikit-learn

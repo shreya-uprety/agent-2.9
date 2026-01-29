@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient ID Tester</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+        h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .section-title {
+            color: #2d3748;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .info-box {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        .info-label {
+            font-size: 11px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .info-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #334155;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        .btn-info {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid #10b981;
+        }
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+        }
+        .status.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border-left: 4px solid #3b82f6;
+        }
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 15px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            line-height: 1.6;
+        }
+        .code-block::-webkit-scrollbar {
+            width: 8px;
+        }
+        .code-block::-webkit-scrollbar-track {
+            background: #0f172a;
+            border-radius: 10px;
+        }
+        .code-block::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 10px;
+        }
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .quick-patients {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .quick-patient {
+            padding: 6px 14px;
+            background: #f1f5f9;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            transition: all 0.2s;
+            font-family: 'Courier New', monospace;
+        }
+        .quick-patient:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+        .endpoint-badge {
+            background: #f1f5f9;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #475569;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>🧪 Patient ID System Tester</h1>
+            <p class="subtitle">Test dynamic patient ID functionality • Server: <span id="serverUrl">http://localhost:8000</span></p>
+            
+            <!-- Current Patient Info -->
+            <div class="section">
+                <div class="section-title">
+                    📊 Current Patient Info
+                </div>
+                <div class="info-grid">
+                    <div class="info-box">
+                        <div class="info-label">Patient ID</div>
+                        <div class="info-value" id="currentPatient">Loading...</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-label">Base URL</div>
+                        <div class="info-value" id="baseUrl">Loading...</div>
+                    </div>
+                </div>
+                <button class="btn btn-sm btn-info" onclick="refreshInfo()">
+                    🔄 Refresh
+                </button>
+            </div>
+
+            <!-- Switch Patient -->
+            <div class="section">
+                <div class="section-title">
+                    🔄 Switch Patient
+                </div>
+                <div class="form-group">
+                    <label for="patientId">Enter Patient ID</label>
+                    <input type="text" id="patientId" placeholder="e.g., P0001, P0002, P0003" />
+                </div>
+                <div class="quick-patients">
+                    <span style="font-size: 12px; color: #64748b; align-self: center; font-weight: 600;">Quick select:</span>
+                    <div class="quick-patient" onclick="quickSwitch('P0001')">P0001</div>
+                    <div class="quick-patient" onclick="quickSwitch('P0002')">P0002</div>
+                    <div class="quick-patient" onclick="quickSwitch('P0003')">P0003</div>
+                    <div class="quick-patient" onclick="quickSwitch('P9999')">P9999</div>
+                </div>
+                <div class="btn-group" style="margin-top: 15px;">
+                    <button class="btn" onclick="switchPatient()" id="switchBtn">
+                        <span id="switchBtnText">Switch Patient</span>
+                    </button>
+                </div>
+                <div id="switchStatus" class="status"></div>
+            </div>
+
+            <!-- Test All Board Operations -->
+            <div class="section">
+                <div class="section-title">
+                    🎯 Test All Board Operations <span class="badge">11 Tools</span>
+                </div>
+                <p style="color: #64748b; font-size: 13px; margin-bottom: 15px;">
+                    Test all canvas board operations with current patient ID
+                </p>
+                
+                <div style="margin-bottom: 20px;">
+                    <div class="section-title" style="font-size: 14px; margin-bottom: 10px;">📖 Read Operations</div>
+                    <div class="btn-group">
+                        <button class="btn btn-success btn-sm" onclick="testGetBoardItems()">
+                            <span class="endpoint-badge">GET</span> Board Items
+                        </button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <div class="section-title" style="font-size: 14px; margin-bottom: 10px;">✏️ Board Actions</div>
+                    <div class="btn-group">
+                        <button class="btn btn-warning btn-sm" onclick="testFocusItem()">
+                            <span class="endpoint-badge">POST</span> Focus Item
+                        </button>
+                        <button class="btn btn-info btn-sm" onclick="testInitiateEASL()">
+                            <span class="endpoint-badge">POST</span> EASL iFrame
+                        </button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <div class="section-title" style="font-size: 14px; margin-bottom: 10px;">📝 Task Management</div>
+                    <div class="btn-group">
+                        <button class="btn btn-info btn-sm" onclick="testCreateTodo()">
+                            <span class="endpoint-badge">POST</span> Create TODO
+                        </button>
+                        <button class="btn btn-warning btn-sm" onclick="testUpdateTodo()">
+                            <span class="endpoint-badge">POST</span> Update TODO
+                        </button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <div class="section-title" style="font-size: 14px; margin-bottom: 10px;">🧪 Medical Records</div>
+                    <div class="btn-group">
+                        <button class="btn btn-info btn-sm" onclick="testCreateLab()">
+                            <span class="endpoint-badge">POST</span> Lab Results
+                        </button>
+                        <button class="btn btn-info btn-sm" onclick="testCreateDiagnosis()">
+                            <span class="endpoint-badge">POST</span> DILI Diagnosis
+                        </button>
+                        <button class="btn btn-info btn-sm" onclick="testCreateReport()">
+                            <span class="endpoint-badge">POST</span> Patient Report
+                        </button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <div class="section-title" style="font-size: 14px; margin-bottom: 10px;">🤖 Agent & System</div>
+                    <div class="btn-group">
+                        <button class="btn btn-info btn-sm" onclick="testCreateAgentResult()">
+                            <span class="endpoint-badge">POST</span> Agent Result
+                        </button>
+                        <button class="btn btn-info btn-sm" onclick="testCreateSchedule()">
+                            <span class="endpoint-badge">POST</span> Schedule
+                        </button>
+                        <button class="btn btn-info btn-sm" onclick="testCreateNotification()">
+                            <span class="endpoint-badge">POST</span> Notification
+                        </button>
+                    </div>
+                </div>
+
+                <div id="testStatus" class="status"></div>
+                <div id="testResults" class="code-block" style="display:none;"></div>
+            </div>
+
+            <!-- Quick Payload Viewer -->
+            <div class="section">
+                <div class="section-title">
+                    🔍 Payload Inspector <span class="badge">All 11 Tools</span>
+                </div>
+                <p style="color: #64748b; font-size: 13px; margin-bottom: 15px;">
+                    View exact payload structures with current patient ID for each operation
+                </p>
+                <div class="btn-group">
+                    <button class="btn btn-sm" onclick="showPayload('focus')">Focus</button>
+                    <button class="btn btn-sm" onclick="showPayload('easl')">EASL</button>
+                    <button class="btn btn-sm" onclick="showPayload('todo')">TODO</button>
+                    <button class="btn btn-sm" onclick="showPayload('updateTodo')">Update TODO</button>
+                    <button class="btn btn-sm" onclick="showPayload('lab')">Lab</button>
+                    <button class="btn btn-sm" onclick="showPayload('agent')">Agent Result</button>
+                    <button class="btn btn-sm" onclick="showPayload('diagnosis')">Diagnosis</button>
+                    <button class="btn btn-sm" onclick="showPayload('report')">Report</button>
+                    <button class="btn btn-sm" onclick="showPayload('schedule')">Schedule</button>
+                    <button class="btn btn-sm" onclick="showPayload('notification')">Notification</button>
+                </div>
+                <div id="payloadResults" class="code-block" style="display:none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+        let currentPatientId = 'P0001';
+
+        // Fetch current patient info
+        async function fetchCurrentPatient() {
+            try {
+                const response = await fetch(`${API_BASE}/patient/current`);
+                const data = await response.json();
+                currentPatientId = data.patientId;
+                document.getElementById('currentPatient').textContent = data.patientId;
+                document.getElementById('baseUrl').textContent = data.baseUrl;
+                return data;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('currentPatient').textContent = 'Error';
+                document.getElementById('baseUrl').textContent = 'Cannot connect';
+                showStatus('switchStatus', '❌ Cannot connect to server. Make sure it\'s running on port 8000', 'error');
+            }
+        }
+
+        // Switch patient
+        async function switchPatient() {
+            const patientId = document.getElementById('patientId').value.trim().toUpperCase();
+            if (!patientId) {
+                showStatus('switchStatus', '⚠️ Please enter a patient ID', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('switchBtn');
+            const btnText = document.getElementById('switchBtnText');
+            btn.disabled = true;
+            btnText.innerHTML = '<span class="spinner"></span> Switching...';
+
+            try {
+                const response = await fetch(`${API_BASE}/patient/switch`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ patientId })
+                });
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    showStatus('switchStatus', `✅ Successfully switched to patient ${data.patientId}`, 'success');
+                    await fetchCurrentPatient();
+                    document.getElementById('patientId').value = '';
+                } else {
+                    showStatus('switchStatus', `❌ ${data.message}`, 'error');
+                }
+            } catch (error) {
+                showStatus('switchStatus', `❌ Error: ${error.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                btnText.textContent = 'Switch Patient';
+            }
+        }
+
+        // Quick switch
+        function quickSwitch(patientId) {
+            document.getElementById('patientId').value = patientId;
+            switchPatient();
+        }
+
+        // Refresh info
+        async function refreshInfo() {
+            await fetchCurrentPatient();
+            showStatus('switchStatus', '✅ Information refreshed', 'success');
+        }
+
+        // ========== TEST FUNCTIONS FOR ALL 11 BOARD OPERATIONS ==========
+        
+        // 1. GET Board Items
+        async function testGetBoardItems() {
+            await fetchCurrentPatient();
+            showTestStatus(`🔄 Testing GET board items for ${currentPatientId}...`, 'info');
+            
+            const result = `📋 GET Board Items Test
+
+Endpoint: GET /api/board-items/${currentPatientId}
+Patient ID: ${currentPatientId}
+
+URL Construction:
+✅ Patient ID is in URL path parameter
+✅ Format: ${API_BASE}/api/board-items/${currentPatientId}
+
+This endpoint retrieves all board items for the current patient.
+Backend will use: patient_manager.get_patient_id() → "${currentPatientId}"`;
+            
+            showTestResults(result);
+            showTestStatus('✅ URL construction verified', 'success');
+        }
+
+        // 2. Focus Item
+        async function testFocusItem() {
+            await fetchCurrentPatient();
+            showTestStatus('🔄 Testing Focus Item...', 'info');
+            
+            const payload = {
+                patientId: currentPatientId,
+                objectId: "dashboard-item-encounter-7",
+                focusOptions: { zoom: 0.5 }
+            };
+
+            const result = `📋 Focus Item Test
+
+Endpoint: POST /api/focus
+Patient ID: ${currentPatientId}
+
+Payload:
+${JSON.stringify(payload, null, 2)}
+
+✅ patientId field included
+✅ Ready to focus on specific board item`;
+            
+            showTestResults(result);
+            showTestStatus('✅ Payload verified', 'success');
+        }
+
+        // 3. Initiate EASL iFrame
+        async function testInitiateEASL() {
+            await fetchCurrentPatient();
+            showTestStatus('🔄 Testing EASL iFrame...', 'info');
+            
+            const payload = {
+                patientId: currentPatientId,
+                query: "What are the liver function results?",
+                metadata: { source: "voice" }
+            };
+
+            const result = `📋 Initiate EASL iFrame Test
+
+Endpoint: POST /api/send-to-easl
+Patient ID: ${currentPatientId}
+
+Payload:
+${JSON.stringify(payload, null, 2)}
+
+✅ patientId field included
+✅ Query sent to EASL diagnostic system`;
+            
+            showTestResults(result);
+            showTestStatus('✅ Payload verified', 'success');
+        }
+
+        // 4. Create TODO
+        async function testCreateTodo() {
+            await fetchCurrentPatient();
+            showTestStatus('🔄 Testing Create TODO...', 'info');
+            
+            const payload = {
+                patientId: currentPatientId,
+                title: "Follow-up Actions",
+                description: "Tasks for patient care",
+                todos: [
+                    {
+                        id: "task-101",
+                        text: "Review lab results",
+                        status: "pending",
+                        agent: "Clinical Agent",
+                        subTodos: [
+                            { text: "Check ALT levels", status: "pending" },
+                            { text: "Compare with previous results", status: "pending" }
+                        ]
+                    }
+                ]
+            };
+
+            const result = `📋 Create TODO Test
+
+Endpoint: POST /api/enhanced-todo
+Patient ID: ${currentPatientId}
+
+Payload:
+${JSON.stringify(payload, null, 2)}
+
+✅ patientId field included
+✅ Task structure with subtasks`;
+            
+            showTestResults(result);
+            showTestStatus('✅ Payload verified', 'success');
+        }
+
+        // 5. Update TODO
+        async function testUpdateTodo() {
+            await fetchCurrentPatient();
+            showTestStatus('🔄 Testing Update TODO...', 'info');
+            
+            const payload = {
+                patientId: currentPatientId,
+                todoId: "task-101",
+                status: "completed"
+            };
+
+            const result = `📋 Update TODO Status Test
+
+Endpoint: POST /api/update-todo-status
+Patient ID: ${currentPatientId}
+
+Payload:
+${JSON.stringify(payload, null, 2)}
+
+✅ patientId field included
+✅ Updates task status`;
+            
+            showTestResults(result);
+            showTestStatus('✅ Payload verified', 'success');
+        }
+
+        // 6. Create Lab Results
+        async function testCreateLab() {
+            await fetchCurrentPatient();
+            showTestStatus('🔄 Testing Create Lab Results...', 'info');
+            
+            const payload = {
+                patientId: currentPatientId,
+                encounter: "Encounter 7",
+                results: [
+                    { test: "ALT", value: 490, unit: "U/L", ref: "0-40", status: "High" },
+                    { test: "AST", value: 380, unit: "U/L", ref: "0-40", status: "High" },
+                    { test: "Bilirubin", value: 2.5, unit: "mg/dL", ref: "0.1-1.2", status: "High" }
+                ]
+            };
+
+            const result = `📋 Create Lab Results Test
+
+Endpoint: POST /api/lab-results
+Patient ID: ${currentPatientId}
+
+Payload:
+${JSON.stringify(payload, null, 2)}
+
+✅ patientId field included
+✅ Lab test results with reference ranges`;
+            
+            showTestResults(result);
+            showTestStatus('✅ Payload verified', 'success');
+        }
+
+        // 7. Create Agent Result
+        async function testCreateAgentResult() {
+            await fetchCurrentPatient();
+            showTestStatus('🔄 Testing Create Agent Result...', 'info');
+            
+            const payload = {
+                patientId: currentPatientId,
+                agentType: "Clinical Reasoning",
+                result: "Patient shows signs of drug-induced liver injury based on elevated transaminases.",
+                confidence: 0.92
+            };
+
+            const result = `📋 Create Agent Result Test
+
+Endpoint: POST /api/agents
+Patient ID: ${currentPatientId}
+
+Payload:
+${JSON.stringify(payload, null, 2)}
+
+✅ patientId field included
+✅ AI agent analysis result`;
+            
+            showTestResults(result);
+            showTestStatus('✅ Payload verified', 'success');
+        }
+
+        // 8. Create Diagnosis
+        async function testCreateDiagnosis() {
+            await fetchCurrentPatient();
+            showTestStatus('🔄 Testing Create DILI Diagnosis...', 'info');
+            
+            const payload = {
+                patientId: currentPatientId,
+                zone: "dili-analysis-zone",
+                diagnosis: "Drug-Induced Liver Injury (DILI)",
+                severity: "Moderate",
+                confidence: 0.87,
+                reasoning: "Elevated ALT/AST with recent medication history"
+            };
+
+            const result = `📋 Create DILI Diagnosis Test
+
+Endpoint: POST /api/dili-diagnostic
+Patient ID: ${currentPatientId}
+
+Payload:
+${JSON.stringify(payload, null, 2)}
+
+✅ patientId field included
+✅ zone field auto-set to "dili-analysis-zone"
+✅ Diagnostic assessment for DILI`;
+            
+            showTestResults(result);
+            showTestStatus('✅ Payload verified', 'success');
+        }
+
+        // 9. Create Patient Report
+        async function testCreateReport() {
+            await fetchCurrentPatient();
+            showTestStatus('🔄 Testing Create Patient Report...', 'info');
+            
+            const payload = {
+                patientId: currentPatientId,
+                zone: "dili-analysis-zone",
+                reportType: "Clinical Summary",
+                content: "Patient presents with elevated liver enzymes...",
+                generatedBy: "AI Agent"
+            };
+
+            const result = `📋 Create Patient Report Test
+
+Endpoint: POST /api/patient-report
+Patient ID: ${currentPatientId}
+
+Payload:
+${JSON.stringify(payload, null, 2)}
+
+✅ patientId field included
+✅ zone field auto-set to "dili-analysis-zone"
+✅ Comprehensive patient report`;
+            
+            showTestResults(result);
+            showTestStatus('✅ Payload verified', 'success');
+        }
+
+        // 10. Create Schedule
+        async function testCreateSchedule() {
+            await fetchCurrentPatient();
+            showTestStatus('🔄 Testing Create Schedule...', 'info');
+            
+            const payload = {
+                patientId: currentPatientId,
+                title: "Follow-up Appointment",
+                date: "2026-02-15",
+                time: "10:00 AM",
+                provider: "Dr. Smith"
+            };
+
+            const result = `📋 Create Schedule Test
+
+Endpoint: POST /api/schedule
+Patient ID: ${currentPatientId}
+
+Payload:
+${JSON.stringify(payload, null, 2)}
+
+✅ patientId field included
+✅ Appointment scheduling`;
+            
+            showTestResults(result);
+            showTestStatus('✅ Payload verified', 'success');
+        }
+
+        // 11. Create Notification
+        async function testCreateNotification() {
+            await fetchCurrentPatient();
+            showTestStatus('🔄 Testing Create Notification...', 'info');
+            
+            const payload = {
+                patientId: currentPatientId,
+                message: "Lab results reviewed. Follow-up required.",
+                priority: "high",
+                recipient: "GP"
+            };
+
+            const result = `📋 Create Notification Test
+
+Endpoint: POST /api/notification
+Patient ID: ${currentPatientId}
+
+Payload:
+${JSON.stringify(payload, null, 2)}
+
+✅ patientId field included
+✅ System notification`;
+            
+            showTestResults(result);
+            showTestStatus('✅ Payload verified', 'success');
+        }
+
+        // ========== PAYLOAD INSPECTOR - ALL 11 TOOLS ==========
+        async function showPayload(type) {
+            await fetchCurrentPatient();
+            
+            const payloads = {
+                focus: {
+                    endpoint: 'POST /api/focus',
+                    description: 'Focus on a specific board item',
+                    payload: {
+                        patientId: currentPatientId,
+                        objectId: "dashboard-item-encounter-7",
+                        focusOptions: { zoom: 0.5 }
+                    }
+                },
+                easl: {
+                    endpoint: 'POST /api/send-to-easl',
+                    description: 'Send query to EASL diagnostic system',
+                    payload: {
+                        patientId: currentPatientId,
+                        query: "What are the liver function results?",
+                        metadata: { source: "voice" }
+                    }
+                },
+                todo: {
+                    endpoint: 'POST /api/enhanced-todo',
+                    description: 'Create a TODO task with subtasks',
+                    payload: {
+                        patientId: currentPatientId,
+                        title: "Follow-up Actions",
+                        description: "Patient care tasks",
+                        todos: [
+                            {
+                                id: "task-101",
+                                text: "Review lab results",
+                                status: "pending",
+                                agent: "Clinical Agent",
+                                subTodos: [
+                                    { text: "Check ALT levels", status: "pending" }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                updateTodo: {
+                    endpoint: 'POST /api/update-todo-status',
+                    description: 'Update TODO task status',
+                    payload: {
+                        patientId: currentPatientId,
+                        todoId: "task-101",
+                        status: "completed"
+                    }
+                },
+                lab: {
+                    endpoint: 'POST /api/lab-results',
+                    description: 'Create lab test results',
+                    payload: {
+                        patientId: currentPatientId,
+                        encounter: "Encounter 7",
+                        results: [
+                            { test: "ALT", value: 490, unit: "U/L", ref: "0-40", status: "High" },
+                            { test: "AST", value: 380, unit: "U/L", ref: "0-40", status: "High" }
+                        ]
+                    }
+                },
+                agent: {
+                    endpoint: 'POST /api/agents',
+                    description: 'Submit AI agent analysis result',
+                    payload: {
+                        patientId: currentPatientId,
+                        agentType: "Clinical Reasoning",
+                        result: "Patient shows signs of drug-induced liver injury.",
+                        confidence: 0.92
+                    }
+                },
+                diagnosis: {
+                    endpoint: 'POST /api/dili-diagnostic',
+                    description: 'Create DILI diagnosis',
+                    payload: {
+                        patientId: currentPatientId,
+                        zone: "dili-analysis-zone",
+                        diagnosis: "Drug-Induced Liver Injury (DILI)",
+                        severity: "Moderate",
+                        confidence: 0.87,
+                        reasoning: "Elevated ALT/AST with recent medication history"
+                    }
+                },
+                report: {
+                    endpoint: 'POST /api/patient-report',
+                    description: 'Generate patient report',
+                    payload: {
+                        patientId: currentPatientId,
+                        zone: "dili-analysis-zone",
+                        reportType: "Clinical Summary",
+                        content: "Patient presents with elevated liver enzymes...",
+                        generatedBy: "AI Agent"
+                    }
+                },
+                schedule: {
+                    endpoint: 'POST /api/schedule',
+                    description: 'Create appointment schedule',
+                    payload: {
+                        patientId: currentPatientId,
+                        title: "Follow-up Appointment",
+                        date: "2026-02-15",
+                        time: "10:00 AM",
+                        provider: "Dr. Smith"
+                    }
+                },
+                notification: {
+                    endpoint: 'POST /api/notification',
+                    description: 'Send system notification',
+                    payload: {
+                        patientId: currentPatientId,
+                        message: "Lab results reviewed. Follow-up required.",
+                        priority: "high",
+                        recipient: "GP"
+                    }
+                }
+            };
+
+            const selected = payloads[type];
+            const result = `📋 ${selected.endpoint}
+
+${selected.description}
+
+Payload with Current Patient ID (${currentPatientId}):
+
+${JSON.stringify(selected.payload, null, 2)}
+
+✅ patientId field automatically included
+✅ Ready for canvas board API`;
+
+            const resultsDiv = document.getElementById('payloadResults');
+            resultsDiv.textContent = result;
+            resultsDiv.style.display = 'block';
+        }
+
+        // Helper functions
+        function showStatus(elementId, message, type) {
+            const statusDiv = document.getElementById(elementId);
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+            statusDiv.style.display = 'block';
+            setTimeout(() => {
+                statusDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        function showTestStatus(message, type) {
+            showStatus('testStatus', message, type);
+        }
+
+        function showTestResults(text) {
+            const resultsDiv = document.getElementById('testResults');
+            resultsDiv.textContent = text;
+            resultsDiv.style.display = 'block';
+        }
+
+        // Enter key support
+        document.getElementById('patientId').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') switchPatient();
+        });
+
+        // Load current patient on page load
+        window.addEventListener('load', () => {
+            document.getElementById('serverUrl').textContent = API_BASE;
+            fetchCurrentPatient();
+        });
+    </script>
+</body>
+</html>

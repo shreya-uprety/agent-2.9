@@ -5,14 +5,16 @@ import config
 import httpx
 import json
 from dotenv import load_dotenv
+from patient_manager import patient_manager
 load_dotenv()
 
 
 
 
-BASE_URL = os.getenv("CANVAS_URL", "https://board-v24problem.vercel.app")
+BASE_URL = patient_manager.get_base_url()
 
 print("#### helper_model.py CANVAS_URL : ",BASE_URL)
+print("#### Current Patient ID: ", patient_manager.get_patient_id())
 
 
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
@@ -31,7 +33,8 @@ with open("system_prompts/question_gen.md", "r", encoding="utf-8") as f:
 
 async def load_ehr():
     print("Start load_ehr")
-    url = BASE_URL + "/api/board-items"
+    patient_id = patient_manager.get_patient_id()
+    url = BASE_URL + f"/api/board-items/{patient_id}"
     
     async with httpx.AsyncClient() as client:
         response = await client.get(url)

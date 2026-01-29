@@ -6,11 +6,13 @@ import helper_model
 import os
 import config
 from dotenv import load_dotenv
+from patient_manager import patient_manager
 load_dotenv()
 
 
-BASE_URL = os.getenv("CANVAS_URL", "https://board-v24problem.vercel.app")
+BASE_URL = patient_manager.get_base_url()
 print("#### canvas_ops.py CANVAS_URL : ",BASE_URL)
+print("#### Current Patient ID: ", patient_manager.get_patient_id())
 
 with open("object_desc.json", "r", encoding="utf-8") as f:
     object_desc = json.load(f)
@@ -55,7 +57,8 @@ def board_items_process(data):
     return clean_data
 
 def get_board_items():
-    url = BASE_URL + "/api/board-items"
+    patient_id = patient_manager.get_patient_id()
+    url = BASE_URL + f"/api/board-items/{patient_id}"
     data = []
     
     # 1. Try fetching from API
@@ -99,6 +102,7 @@ def get_board_items():
 async def initiate_easl_iframe(question):
     url = BASE_URL + "/api/send-to-easl"
     payload = {
+        "patientId": patient_manager.get_patient_id(),
         "query": question,
         "metadata": {
             "source": "voice"
@@ -145,6 +149,7 @@ async def focus_item(item_id):
 
     url = BASE_URL + "/api/focus"
     payload = {
+        "patientId": patient_manager.get_patient_id(),
         "objectId": item_id,
         "focusOptions": {
             "zoom": 0.5
@@ -165,6 +170,7 @@ async def create_todo(payload_body):
     url = BASE_URL + "/api/enhanced-todo"
 
     payload = payload_body
+    payload["patientId"] = patient_manager.get_patient_id()
 
     # response = requests.post(url, json=payload)
     async with aiohttp.ClientSession() as session:
@@ -178,6 +184,7 @@ async def create_todo(payload_body):
 
 async def update_todo(payload):
     url = BASE_URL + "/api/update-todo-status"
+    payload["patientId"] = patient_manager.get_patient_id()
 
     # response = requests.post(url, json=payload)
     async with aiohttp.ClientSession() as session:
@@ -193,6 +200,7 @@ async def update_todo(payload):
 async def create_lab(payload):
    
     url = BASE_URL + "/api/lab-results"
+    payload["patientId"] = patient_manager.get_patient_id()
     
 
     # response = requests.post(url, json=payload)
@@ -211,6 +219,7 @@ async def create_result(agent_result):
     url = BASE_URL + "/api/agents"
     
     payload = agent_result
+    payload["patientId"] = patient_manager.get_patient_id()
 
     # response = requests.post(url, json=payload)
     async with aiohttp.ClientSession() as session:
@@ -228,6 +237,7 @@ def create_diagnosis(payload):
     print("Start create object")
     url = BASE_URL + "/api/dili-diagnostic"
     payload['zone'] = "dili-analysis-zone"
+    payload['patientId'] = patient_manager.get_patient_id()
     with open(f"{config.output_dir}/diagnosis_create_payload.json", "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=4)
     response = requests.post(url, json=payload)
@@ -248,6 +258,7 @@ def create_diagnosis(payload):
 async def create_report(payload):
     url = BASE_URL + "/api/patient-report"
     payload['zone'] = "dili-analysis-zone"
+    payload['patientId'] = patient_manager.get_patient_id()
 
     # response = requests.post(url, json=payload)
     async with aiohttp.ClientSession() as session:
@@ -263,6 +274,7 @@ async def create_report(payload):
         
 async def create_schedule(payload):
     url = BASE_URL + "/api/schedule"
+    payload["patientId"] = patient_manager.get_patient_id()
 
     # response = requests.post(url, json=payload)
     async with aiohttp.ClientSession() as session:
@@ -278,6 +290,7 @@ async def create_schedule(payload):
         
 async def create_notification(payload):
     url = BASE_URL + "/api/notification"
+    payload["patientId"] = patient_manager.get_patient_id()
 
     # response = requests.post(url, json=payload)
     async with aiohttp.ClientSession() as session:

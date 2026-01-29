@@ -14,12 +14,14 @@ import random
 import threading
 import httpx
 import rag
+from patient_manager import patient_manager
 
 
 
 
-BASE_URL = os.getenv("CANVAS_URL", "https://board-v24problem.vercel.app")
+BASE_URL = patient_manager.get_base_url()
 print("#### side_agent.py CANVAS_URL : ",BASE_URL)
+print("#### Current Patient ID: ", patient_manager.get_patient_id())
 
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 # MODEL = "gemini-2.5-pro"
@@ -248,7 +250,8 @@ async def trigger_easl(question):
 
 async def load_ehr():
     print("Start load_ehr")
-    url = BASE_URL + "/api/board-items"
+    patient_id = patient_manager.get_patient_id()
+    url = BASE_URL + f"/api/board-items/{patient_id}"
     
     async with httpx.AsyncClient(timeout=10) as client:
         response = await client.get(url)
