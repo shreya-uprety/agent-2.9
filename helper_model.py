@@ -33,19 +33,19 @@ with open("system_prompts/question_gen.md", "r", encoding="utf-8") as f:
 
 async def load_ehr():
     print("Start load_ehr")
-    patient_id = patient_manager.get_patient_id()
+    patient_id = patient_manager.get_patient_id().lower()
     url = BASE_URL + f"/api/board-items/{patient_id}"
     
     async with httpx.AsyncClient() as client:
         response = await client.get(url)
+        print(f"Status code: {response.status_code}")
         data = response.json()
-
+        
+        # Handle new API format: {"patientId": "...", "items": [...]}
+        if isinstance(data, dict) and 'items' in data:
+            data = data['items']
+        
         return data
-    # response = requests.get(url)
-    # print("load ehr",response.status_code)
-    # data = response.json()
-
-    # return data
 
 async def generate_response(todo_obj):
     model = genai.GenerativeModel(

@@ -115,16 +115,22 @@ async def chat_agent(chat_history: list[dict]) -> str:
     else:
         object_id = await side_agent.resolve_object_id(query, context)
         print("OBJECT ID :",object_id)
+        if object_id and object_id.get('objectId'):
+            # If navigation happened, include object info in context
+            conversation_text += f"\n\n[System: Successfully navigated to {object_id.get('objectId')}]\n"
 
 
     prompt = f"""
-    Answer below user query using available data. Give detailed output.
+    Answer below user query using available data from the board items. 
+    The context contains real patient data from the board - use it to answer the query.
+    Give detailed output based on the board data.
+    
     User query : {query}
 
     Chat History : 
     {conversation_text}
 
-    Context : 
+    Context (Board Data): 
     {context}
     """
 

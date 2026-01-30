@@ -1,5 +1,6 @@
 {
-    "objectId": "dashboard-item-1759853783245-patient-context",
+    "patientId": "p0001",
+    "objectId": "raw-encounter-image-3",
     "focusOptions": {
         "zoom": 0.5
     }

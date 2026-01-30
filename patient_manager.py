@@ -13,7 +13,7 @@ class PatientManager:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            cls._instance._current_patient_id = os.getenv("DEFAULT_PATIENT_ID", "P0001")
+            cls._instance._current_patient_id = os.getenv("DEFAULT_PATIENT_ID", "p0001")
         return cls._instance
     
     def get_patient_id(self) -> str:
@@ -27,7 +27,7 @@ class PatientManager:
     
     def get_base_url(self) -> str:
         """Get base URL from environment"""
-        return os.getenv("CANVAS_URL", "https://board-v24problem.vercel.app")
+        return os.getenv("CANVAS_URL", "https://iso-clinic-v3.vercel.app")
 
 # Global singleton instance
 patient_manager = PatientManager()

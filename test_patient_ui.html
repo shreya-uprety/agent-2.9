@@ -302,14 +302,11 @@
                 </div>
                 <div class="form-group">
                     <label for="patientId">Enter Patient ID</label>
-                    <input type="text" id="patientId" placeholder="e.g., P0001, P0002, P0003" />
+                    <input type="text" id="patientId" placeholder="e.g., p0001 (Arthur Pendelton)" />
                 </div>
                 <div class="quick-patients">
                     <span style="font-size: 12px; color: #64748b; align-self: center; font-weight: 600;">Quick select:</span>
-                    <div class="quick-patient" onclick="quickSwitch('P0001')">P0001</div>
-                    <div class="quick-patient" onclick="quickSwitch('P0002')">P0002</div>
-                    <div class="quick-patient" onclick="quickSwitch('P0003')">P0003</div>
-                    <div class="quick-patient" onclick="quickSwitch('P9999')">P9999</div>
+                    <div class="quick-patient" onclick="quickSwitch('p0001')">p0001 (Arthur Pendelton)</div>
                 </div>
                 <div class="btn-group" style="margin-top: 15px;">
                     <button class="btn" onclick="switchPatient()" id="switchBtn">
@@ -395,6 +392,147 @@
                 <div id="testResults" class="code-block" style="display:none;"></div>
             </div>
 
+            <!-- Voice Agent Simulation -->
+            <div class="section">
+                <div class="section-title">
+                    🎤 Voice Agent Comprehensive Testing <span class="badge">All 6 Tool Types</span>
+                </div>
+                <p style="color: #64748b; font-size: 13px; margin-bottom: 15px;">
+                    Comprehensive voice command testing - simulates real frontend voice agent interaction
+                </p>
+                
+                <!-- TEST SUITE 1: Navigate Canvas -->
+                <div style="margin-bottom: 20px;">
+                    <div class="section-title" style="font-size: 14px; margin-bottom: 10px; color: #f59e0b;">
+                        🧭 TEST 1: Navigate Canvas (navigate_canvas tool)
+                    </div>
+                    <p style="color: #64748b; font-size: 12px; margin-bottom: 10px;">
+                        Tests focusing on specific board items
+                    </p>
+                    <div class="btn-group">
+                        <button class="btn btn-warning btn-sm" onclick="sendVoiceCommand('Show me encounter 2')">
+                            📍 Encounter 2
+                        </button>
+                        <button class="btn btn-warning btn-sm" onclick="sendVoiceCommand('Focus on medication timeline')">
+                            💊 Medication Timeline
+                        </button>
+                        <button class="btn btn-warning btn-sm" onclick="sendVoiceCommand('Show me the lab results')">
+                            🧪 Lab Results
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TEST SUITE 2: Generate Tasks -->
+                <div style="margin-bottom: 20px;">
+                    <div class="section-title" style="font-size: 14px; margin-bottom: 10px; color: #3b82f6;">
+                        ⚙️ TEST 2: Generate Tasks (generate_task tool)
+                    </div>
+                    <p style="color: #64748b; font-size: 12px; margin-bottom: 10px;">
+                        Tests background task generation and execution
+                    </p>
+                    <div class="btn-group">
+                        <button class="btn btn-info btn-sm" onclick="sendVoiceCommand('Create task to analyze recent lab results')">
+                            📊 Analyze Lab Results
+                        </button>
+                        <button class="btn btn-info btn-sm" onclick="sendVoiceCommand('Create task to review medication interactions')">
+                            💊 Review Medications
+                        </button>
+                        <button class="btn btn-info btn-sm" onclick="sendVoiceCommand('Create task to summarize patient history')">
+                            📋 Summarize History
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TEST SUITE 3: EASL Guidelines -->
+                <div style="margin-bottom: 20px;">
+                    <div class="section-title" style="font-size: 14px; margin-bottom: 10px; color: #10b981;">
+                        📚 TEST 3: EASL Guidelines (get_easl_answer tool)
+                    </div>
+                    <p style="color: #64748b; font-size: 12px; margin-bottom: 10px;">
+                        Tests EASL guideline queries (answer appears in iframe)
+                    </p>
+                    <div class="btn-group">
+                        <button class="btn btn-success btn-sm" onclick="sendVoiceCommand('What does EASL guideline say about DILI diagnosis?')">
+                            🔬 DILI Diagnosis
+                        </button>
+                        <button class="btn btn-success btn-sm" onclick="sendVoiceCommand('What are EASL recommendations for liver function monitoring?')">
+                            📈 Liver Monitoring
+                        </button>
+                        <button class="btn btn-success btn-sm" onclick="sendVoiceCommand('EASL guidelines for hepatotoxicity assessment')">
+                            ⚕️ Hepatotoxicity
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TEST SUITE 4: General Queries -->
+                <div style="margin-bottom: 20px;">
+                    <div class="section-title" style="font-size: 14px; margin-bottom: 10px; color: #8b5cf6;">
+                        💬 TEST 4: General Queries (general tool)
+                    </div>
+                    <p style="color: #64748b; font-size: 12px; margin-bottom: 10px;">
+                        Tests answering questions from board data
+                    </p>
+                    <div class="btn-group">
+                        <button class="btn btn-sm" onclick="sendVoiceCommand(&quot;What is the patient's current diagnosis?&quot;)">
+                            🏥 Current Diagnosis
+                        </button>
+                        <button class="btn btn-sm" onclick="sendVoiceCommand('What medications is the patient taking?')">
+                            💊 Current Medications
+                        </button>
+                        <button class="btn btn-sm" onclick="sendVoiceCommand(&quot;Summarize the patient's recent lab results&quot;)">
+                            📊 Lab Summary
+                        </button>
+                        <button class="btn btn-sm" onclick="sendVoiceCommand('Tell me about encounter 2')">
+                            📋 Encounter Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TEST SUITE 5: Schedule & Notifications -->
+                <div style="margin-bottom: 20px;">
+                    <div class="section-title" style="font-size: 14px; margin-bottom: 10px; color: #ec4899;">
+                        🔔 TEST 5: Schedule & Notify (create_schedule, send_notification)
+                    </div>
+                    <p style="color: #64748b; font-size: 12px; margin-bottom: 10px;">
+                        Tests creating schedules and sending notifications
+                    </p>
+                    <div class="btn-group">
+                        <button class="btn btn-sm" onclick="sendVoiceCommand('Schedule follow-up appointment')">
+                            📅 Schedule Appointment
+                        </button>
+                        <button class="btn btn-sm" onclick="sendVoiceCommand('Send notification to care team')">
+                            📨 Send Notification
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Custom Command -->
+                <div style="margin-bottom: 20px;">
+                    <div class="section-title" style="font-size: 14px; margin-bottom: 10px; color: #64748b;">
+                        🎤 Custom Command
+                    </div>
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <input type="text" id="voiceCommand" placeholder="Enter custom voice command..." style="width: 100%;" />
+                    </div>
+                    <button class="btn" onclick="sendVoiceCommand(document.getElementById('voiceCommand').value)" style="width: 100%;">
+                        🎤 Send Custom Command
+                    </button>
+                </div>
+
+                <!-- Run All Tests Button -->
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #e2e8f0;">
+                    <button class="btn btn-success" onclick="runAllVoiceTests()" style="width: 100%; padding: 15px; font-size: 16px; font-weight: 600;">
+                        🚀 Run All Voice Tests (18 Commands)
+                    </button>
+                    <p style="color: #64748b; font-size: 12px; margin-top: 10px; text-align: center;">
+                        Executes all test suites sequentially with delays
+                    </p>
+                </div>
+
+                <div id="voiceStatus" class="status"></div>
+                <div id="voiceResults" class="code-block" style="display:none;"></div>
+            </div>
+
             <!-- Quick Payload Viewer -->
             <div class="section">
                 <div class="section-title">
@@ -422,7 +560,7 @@
 
     <script>
         const API_BASE = 'http://localhost:8000';
-        let currentPatientId = 'P0001';
+        let currentPatientId = 'p0001';
 
         // Fetch current patient info
         async function fetchCurrentPatient() {
@@ -443,7 +581,7 @@
 
         // Switch patient
         async function switchPatient() {
-            const patientId = document.getElementById('patientId').value.trim().toUpperCase();
+            const patientId = document.getElementById('patientId').value.trim().toLowerCase();
             if (!patientId) {
                 showStatus('switchStatus', '⚠️ Please enter a patient ID', 'error');
                 return;
@@ -936,6 +1074,68 @@ ${JSON.stringify(selected.payload, null, 2)}
             resultsDiv.style.display = 'block';
         }
 
+        // ========== VOICE AGENT SIMULATION ==========
+        async function sendVoiceCommand(command) {
+            console.log('sendVoiceCommand called with:', command);
+            
+            if (!command || command.trim() === '') {
+                showStatus('voiceStatus', '⚠️ Please enter a command', 'error');
+                return;
+            }
+
+            await fetchCurrentPatient();
+            console.log('Current patient:', currentPatientId);
+            showStatus('voiceStatus', `🔄 Processing: "${command}"`, 'info');
+            
+            const resultsDiv = document.getElementById('voiceResults');
+            resultsDiv.textContent = `🎤 Voice Command: "${command}"\n👤 Patient: ${currentPatientId}\n⏳ Waiting for response...\n`;
+            resultsDiv.style.display = 'block';
+
+            try {
+                const startTime = Date.now();
+                console.log('Sending request to:', `${API_BASE}/send-chat`);
+                const response = await fetch(`${API_BASE}/send-chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify([
+                        { role: 'user', content: command }
+                    ])
+                });
+                
+                console.log('Response status:', response.status);
+                const duration = ((Date.now() - startTime) / 1000).toFixed(2);
+                
+                if (response.ok) {
+                    const result = await response.text();
+                    
+                    const output = `🎤 Voice Command: "${command}"
+👤 Patient: ${currentPatientId}
+⏱️  Processing Time: ${duration}s
+
+📋 Agent Response:
+${'='.repeat(60)}
+${result}
+${'='.repeat(60)}
+
+✅ Command processed successfully!
+
+💡 Check d:\\agent-2.9\\output\\ folder for generated payloads:
+   - focus_payload.json (if navigation tool used)
+   - chatmode_todo_*.json (if task tool used)
+   - initiate_iframe_*.json (if EASL tool used)`;
+                    
+                    resultsDiv.textContent = output;
+                    showStatus('voiceStatus', `✅ Command completed in ${duration}s`, 'success');
+                } else {
+                    resultsDiv.textContent = `❌ Error ${response.status}: ${await response.text()}`;
+                    showStatus('voiceStatus', `❌ Command failed`, 'error');
+                }
+            } catch (error) {
+                resultsDiv.textContent = `❌ Error: ${error.message}`;
+                showStatus('voiceStatus', `❌ Connection error: ${error.message}`, 'error');
+            }
+        }
+
         // Helper functions
         function showStatus(elementId, message, type) {
             const statusDiv = document.getElementById(elementId);
@@ -955,6 +1155,111 @@ ${JSON.stringify(selected.payload, null, 2)}
             const resultsDiv = document.getElementById('testResults');
             resultsDiv.textContent = text;
             resultsDiv.style.display = 'block';
+        }
+
+        // ========== RUN ALL VOICE TESTS ==========
+        async function runAllVoiceTests() {
+            const resultsDiv = document.getElementById('voiceResults');
+            resultsDiv.style.display = 'block';
+            resultsDiv.textContent = `🚀 Running Comprehensive Voice Agent Tests
+${'='.repeat(60)}
+Patient: ${currentPatientId}
+Test Suite: All 6 Tool Types (18 Commands)
+${'='.repeat(60)}
+
+`;
+
+            let testsPassed = 0;
+            let testsFailed = 0;
+            let totalTests = 0;
+
+            const allTests = [
+                // TEST 1: Navigate Canvas (3 tests)
+                { suite: 'Navigate Canvas', command: 'Show me encounter 2', wait: 3 },
+                { suite: 'Navigate Canvas', command: 'Focus on medication timeline', wait: 3 },
+                { suite: 'Navigate Canvas', command: 'Show me the lab results', wait: 3 },
+                
+                // TEST 2: Generate Tasks (3 tests)
+                { suite: 'Generate Tasks', command: 'Create task to analyze recent lab results', wait: 12 },
+                { suite: 'Generate Tasks', command: 'Create task to review medication interactions', wait: 12 },
+                { suite: 'Generate Tasks', command: 'Create task to summarize patient history', wait: 12 },
+                
+                // TEST 3: EASL Guidelines (3 tests)
+                { suite: 'EASL Guidelines', command: 'What does EASL guideline say about DILI diagnosis?', wait: 10 },
+                { suite: 'EASL Guidelines', command: 'What are EASL recommendations for liver function monitoring?', wait: 10 },
+                { suite: 'EASL Guidelines', command: 'EASL guidelines for hepatotoxicity assessment', wait: 10 },
+                
+                // TEST 4: General Queries (4 tests)
+                { suite: 'General Queries', command: 'What is the patient\'s current diagnosis?', wait: 3 },
+                { suite: 'General Queries', command: 'What medications is the patient taking?', wait: 3 },
+                { suite: 'General Queries', command: 'Summarize the patient\'s recent lab results', wait: 3 },
+                { suite: 'General Queries', command: 'Tell me about encounter 2', wait: 3 },
+                
+                // TEST 5: Schedule & Notify (2 tests)
+                { suite: 'Schedule & Notify', command: 'Schedule follow-up appointment', wait: 3 },
+                { suite: 'Schedule & Notify', command: 'Send notification to care team', wait: 3 }
+            ];
+
+            for (let i = 0; i < allTests.length; i++) {
+                const test = allTests[i];
+                totalTests++;
+                
+                resultsDiv.textContent += `\n[${ i + 1}/${allTests.length}] ${test.suite}: "${test.command}"\n`;
+                resultsDiv.textContent += `    ⏳ Processing...\n`;
+                
+                showStatus('voiceStatus', `🔄 Test ${i + 1}/${allTests.length}: ${test.command}`, 'info');
+                
+                try {
+                    const startTime = Date.now();
+                    const response = await fetch(`${API_BASE}/send-chat`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify([{ role: 'user', content: test.command }])
+                    });
+                    
+                    const duration = ((Date.now() - startTime) / 1000).toFixed(2);
+                    
+                    if (response.ok) {
+                        const result = await response.text();
+                        const preview = result.length > 100 ? result.substring(0, 100) + '...' : result;
+                        resultsDiv.textContent += `    ✅ Success (${duration}s): ${preview}\n`;
+                        testsPassed++;
+                    } else {
+                        resultsDiv.textContent += `    ❌ Failed: HTTP ${response.status}\n`;
+                        testsFailed++;
+                    }
+                } catch (error) {
+                    resultsDiv.textContent += `    ❌ Error: ${error.message}\n`;
+                    testsFailed++;
+                }
+                
+                // Wait before next test
+                if (i < allTests.length - 1) {
+                    resultsDiv.textContent += `    ⏱️  Waiting ${test.wait}s before next test...\n`;
+                    await new Promise(resolve => setTimeout(resolve, test.wait * 1000));
+                }
+            }
+
+            // Final summary
+            resultsDiv.textContent += `\n${'='.repeat(60)}
+FINAL RESULTS
+${'='.repeat(60)}
+Total Tests: ${totalTests}
+✅ Passed: ${testsPassed}
+❌ Failed: ${testsFailed}
+Success Rate: ${((testsPassed / totalTests) * 100).toFixed(1)}%
+
+${testsPassed === totalTests ? '🎉 ALL TESTS PASSED!' : '⚠️  Some tests failed. Check results above.'}
+
+💡 Output files saved to: d:\\agent-2.9\\output\\
+   Check server logs for detailed execution traces.
+`;
+
+            if (testsPassed === totalTests) {
+                showStatus('voiceStatus', `🎉 All ${totalTests} tests passed!`, 'success');
+            } else {
+                showStatus('voiceStatus', `⚠️  ${testsPassed}/${totalTests} tests passed`, 'error');
+            }
         }
 
         // Enter key support

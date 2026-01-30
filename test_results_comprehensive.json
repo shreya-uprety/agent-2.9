@@ -1,0 +1,493 @@
+{
+  "navigate_canvas": [
+    {
+      "test": "Navigate to Encounter 2",
+      "command": "Show me encounter 2",
+      "success": true,
+      "response": "This is encounter 2. The image is patient_data_P0001_raw_data_encounter_report_1_2025-10-19.png. It is a radiology image from the EHR System.",
+      "file_content": {
+        "patientId": "p0001",
+        "objectId": "raw-encounter-image-2",
+        "focusOptions": {
+          "zoom": 0.5
+        }
+      }
+    },
+    {
+      "test": "Navigate to medication tracking",
+      "command": "Focus on medication timeline",
+      "success": true,
+      "response": "Here is a timeline of the patient's medications based on the provided data:\n\n**July 19, 2025:**\n*   **Lactulose** started at 30ml for Hepatic encephalopathy.\n*   **Furosemide** started at 20mg for Ascites.\n*   **Normal Saline** started at 75 ml/hr for Fluid resuscitation (This medication was also stopped on this date).\n*   **Thiamine** started at 100mg for Alcoholic liver disease.\n*   **Folic Acid** started at 5mg for Alcoholic liver disease.\n\n**October 19, 2025:**\n*   **Propranolol** started at 40mg for Portal hypertension/varices prophylaxis.\n*   **Sertraline** started at 50mg for Depression.\n\n**January 19, 2026:**\n*   The following medications were continued until this date: Lactulose, Furosemide, Thiamine, Folic Acid, Propranolol, and Sertraline.",
+      "file_content": {
+        "patientId": "p0001",
+        "objectId": "medication-track-1",
+        "focusOptions": {
+          "zoom": 0.5
+        }
+      }
+    },
+    {
+      "test": "Navigate to laboratory results",
+      "command": "Show me the lab results",
+      "success": true,
+      "response": "Here are the lab results for the patient:\n\n**From 2025-10-19 and 2026-01-19:**\n*   **ALT:** 110\n*   **AST:** 150\n*   **Total Bilirubin:** 6.8\n*   **Albumin:** 2.2\n*   **Prothrombin Time (PT) / INR:** 2.1\n*   **Sodium:** 132\n*   **Potassium:** 4.5\n*   **Creatinine:** 1.3\n*   **White Blood Cell Count:** 9.8\n*   **Hemoglobin:** 10.2\n*   **Platelets:** 125\n\n**From 2024-11-15:**\n*   **Alanine Aminotransferase (ALT):** 75 (High)\n*   **Aspartate Aminotransferase (AST):** 62 (High)\n*   **Alkaline Phosphatase (ALP):** 110 (Normal)\n*   **Total Bilirubin:** 1.2 (Normal)\n*   **Albumin:** 3.8 (Normal)\n*   **Creatinine:** 0.9 (Normal)\n*   **Blood Urea Nitrogen (BUN):** 18 (Normal)\n\n**From 2025-10-28:**\n*   **Alanine Aminotransferase (ALT):** 88 (High)\n*   **Aspartate Aminotransferase (AST):** 71 (High)\n*   **Alkaline Phosphatase (ALP):** 125 (Normal)\n*   **Total Bilirubin:** 1.1 (Normal)\n*   **Albumin:** 4.1 (Normal)\n*   **Creatinine:** 0.8 (Normal)\n*   **Blood Urea Nitrogen (BUN):** 16 (Normal)",
+      "file_content": {
+        "patientId": "p0001",
+        "objectId": "dashboard-item-lab-chart",
+        "focusOptions": {
+          "zoom": 0.5
+        }
+      }
+    }
+  ],
+  "generate_task": [
+    {
+      "test": "Generate lab analysis task",
+      "command": "Create task to analyze recent lab results",
+      "success": true,
+      "response": "Task generated. Agent will execute in background.",
+      "files": {
+        "chatmode_todo_generated.json": {
+          "title": "Recent Lab Results Analysis",
+          "description": "Fetch and analyze recent laboratory results for a patient.",
+          "todos": [
+            {
+              "id": "task-1001",
+              "text": "Prepare parameters for lab results retrieval",
+              "status": "pending",
+              "agent": "Data Analyst Agent",
+              "subTodos": [
+                {
+                  "text": "Identify patient identifier",
+                  "status": "pending"
+                },
+                {
+                  "text": "Determine category code for lab results (e.g., LP6970-5)",
+                  "status": "pending"
+                },
+                {
+                  "text": "Set date filter for recent results (e.g., last 30 days)",
+                  "status": "pending"
+                },
+                {
+                  "text": "Specify status filter (e.g., final)",
+                  "status": "pending"
+                },
+                {
+                  "text": "Verify authentication token",
+                  "status": "pending"
+                }
+              ]
+            },
+            {
+              "id": "task-1002",
+              "text": "curl -X GET 'https://api.bedfordshirehospitals.nhs.uk/fhir-prd/r4/DiagnosticReport?patient=<UUID>&category=http://loinc.org|LP6970-5&date=ge2024-05-01&status=final&_sort=-date&_count=10'",
+              "status": "pending",
+              "agent": "Data Analyst Agent",
+              "subTodos": [
+                {
+                  "text": "Execute HTTP request to fetch lab results",
+                  "status": "pending"
+                },
+                {
+                  "text": "Check HTTP status code",
+                  "status": "pending"
+                },
+                {
+                  "text": "Validate response JSON structure",
+                  "status": "pending"
+                }
+              ]
+            },
+            {
+              "id": "task-1003",
+              "text": "Analyze retrieved lab results",
+              "status": "pending",
+              "agent": "Data Analyst Agent",
+              "subTodos": [
+                {
+                  "text": "Parse and interpret lab result values",
+                  "status": "pending"
+                },
+                {
+                  "text": "Identify any abnormal or critical values",
+                  "status": "pending"
+                },
+                {
+                  "text": "Summarize key findings",
+                  "status": "pending"
+                }
+              ]
+            }
+          ]
+        },
+        "chatmode_todo_object_response.json": {
+          "id": "enhanced-todo-1769753922396-qp0ler9w6",
+          "type": "todo",
+          "x": 5860,
+          "y": -5040,
+          "width": 450,
+          "height": "auto",
+          "color": "#ffffff",
+          "description": "Fetch and analyze recent laboratory results for a patient.",
+          "todoData": {
+            "title": "Recent Lab Results Analysis",
+            "description": "Fetch and analyze recent laboratory results for a patient.",
+            "todos": [
+              {
+                "id": "task-1001",
+                "text": "Prepare parameters for lab results retrieval",
+                "status": "pending",
+                "agent": "Data Analyst Agent",
+                "subTodos": [
+                  {
+                    "text": "Identify patient identifier",
+                    "status": "pending"
+                  },
+                  {
+                    "text": "Determine category code for lab results (e.g., LP6970-5)",
+                    "status": "pending"
+                  },
+                  {
+                    "text": "Set date filter for recent results (e.g., last 30 days)",
+                    "status": "pending"
+                  },
+                  {
+                    "text": "Specify status filter (e.g., final)",
+                    "status": "pending"
+                  },
+                  {
+                    "text": "Verify authentication token",
+                    "status": "pending"
+                  }
+                ]
+              },
+              {
+                "id": "task-1002",
+                "text": "curl -X GET 'https://api.bedfordshirehospitals.nhs.uk/fhir-prd/r4/DiagnosticReport?patient=<UUID>&category=http://loinc.org|LP6970-5&date=ge2024-05-01&status=final&_sort=-date&_count=10'",
+                "status": "pending",
+                "agent": "Data Analyst Agent",
+                "subTodos": [
+                  {
+                    "text": "Execute HTTP request to fetch lab results",
+                    "status": "pending"
+                  },
+                  {
+                    "text": "Check HTTP status code",
+                    "status": "pending"
+                  },
+                  {
+                    "text": "Validate response JSON structure",
+                    "status": "pending"
+                  }
+                ]
+              },
+              {
+                "id": "task-1003",
+                "text": "Analyze retrieved lab results",
+                "status": "pending",
+                "agent": "Data Analyst Agent",
+                "subTodos": [
+                  {
+                    "text": "Parse and interpret lab result values",
+                    "status": "pending"
+                  },
+                  {
+                    "text": "Identify any abnormal or critical values",
+                    "status": "pending"
+                  },
+                  {
+                    "text": "Summarize key findings",
+                    "status": "pending"
+                  }
+                ]
+              }
+            ]
+          },
+          "rotation": 0,
+          "createdAt": "2026-01-30T06:18:42.708Z",
+          "updatedAt": "2026-01-30T06:18:42.708Z"
+        }
+      },
+      "result_posted": true,
+      "result_preview": "---\n\n### Patient Lab Results Summary\n\n**Patient ID:** p0001\n**Date Range Reviewed:** 2024-05-01 to 2024-11-15\n**Lab Categories Reviewed:** Laboratory (LP6970-5)\n**Status:** Final\n\n#### Laboratory Repo"
+    },
+    {
+      "test": "Generate medication review task",
+      "command": "Create task to review medication interactions",
+      "success": true,
+      "response": "Task generated. Agent will execute in background.",
+      "files": {
+        "chatmode_todo_generated.json": {
+          "title": "Medication Interaction Review",
+          "description": "Review potential medication interactions for a patient to ensure safety.",
+          "todos": [
+            {
+              "id": "task-med-001",
+              "text": "Retrieve patient's current medication list",
+              "status": "pending",
+              "agent": "Clinical Agent",
+              "subTodos": [
+                {
+                  "text": "Identify patient identifier",
+                  "status": "pending"
+                },
+                {
+                  "text": "Query medication administration records",
+                  "status": "pending"
+                },
+                {
+                  "text": "Query medication request records",
+                  "status": "pending"
+                },
+                {
+                  "text": "Consolidate active medications",
+                  "status": "pending"
+                }
+              ]
+            },
+            {
+              "id": "task-med-002",
+              "text": "Identify potential interactions within the medication list",
+              "status": "pending",
+              "agent": "RAG Agent",
+              "subTodos": [
+                {
+                  "text": "Query drug interaction database",
+                  "status": "pending"
+                },
+                {
+                  "text": "Analyze medication combinations for known interactions",
+                  "status": "pending"
+                },
+                {
+                  "text": "Assess severity of potential interactions",
+                  "status": "pending"
+                }
+              ]
+            },
+            {
+              "id": "task-med-003",
+              "text": "Summarize findings and recommend actions",
+              "status": "pending",
+              "agent": "Consolidator Agent",
+              "subTodos": [
+                {
+                  "text": "Compile list of identified interactions",
+                  "status": "pending"
+                },
+                {
+                  "text": "Provide context on interaction mechanisms",
+                  "status": "pending"
+                },
+                {
+                  "text": "Suggest clinical recommendations",
+                  "status": "pending"
+                }
+              ]
+            }
+          ]
+        },
+        "chatmode_todo_object_response.json": {
+          "id": "enhanced-todo-1769753940804-3941pfxad",
+          "type": "todo",
+          "x": 5860,
+          "y": -5040,
+          "width": 450,
+          "height": "auto",
+          "color": "#ffffff",
+          "description": "Review potential medication interactions for a patient to ensure safety.",
+          "todoData": {
+            "title": "Medication Interaction Review",
+            "description": "Review potential medication interactions for a patient to ensure safety.",
+            "todos": [
+              {
+                "id": "task-med-001",
+                "text": "Retrieve patient's current medication list",
+                "status": "pending",
+                "agent": "Clinical Agent",
+                "subTodos": [
+                  {
+                    "text": "Identify patient identifier",
+                    "status": "pending"
+                  },
+                  {
+                    "text": "Query medication administration records",
+                    "status": "pending"
+                  },
+                  {
+                    "text": "Query medication request records",
+                    "status": "pending"
+                  },
+                  {
+                    "text": "Consolidate active medications",
+                    "status": "pending"
+                  }
+                ]
+              },
+              {
+                "id": "task-med-002",
+                "text": "Identify potential interactions within the medication list",
+                "status": "pending",
+                "agent": "RAG Agent",
+                "subTodos": [
+                  {
+                    "text": "Query drug interaction database",
+                    "status": "pending"
+                  },
+                  {
+                    "text": "Analyze medication combinations for known interactions",
+                    "status": "pending"
+                  },
+                  {
+                    "text": "Assess severity of potential interactions",
+                    "status": "pending"
+                  }
+                ]
+              },
+              {
+                "id": "task-med-003",
+                "text": "Summarize findings and recommend actions",
+                "status": "pending",
+                "agent": "Consolidator Agent",
+                "subTodos": [
+                  {
+                    "text": "Compile list of identified interactions",
+                    "status": "pending"
+                  },
+                  {
+                    "text": "Provide context on interaction mechanisms",
+                    "status": "pending"
+                  },
+                  {
+                    "text": "Suggest clinical recommendations",
+                    "status": "pending"
+                  }
+                ]
+              }
+            ]
+          },
+          "rotation": 0,
+          "createdAt": "2026-01-30T06:19:01.117Z",
+          "updatedAt": "2026-01-30T06:19:01.117Z"
+        }
+      },
+      "result_posted": true,
+      "result_preview": "---\n\n### Medication Interaction Review for Patient p0001\n\n**Patient ID:** p0001\n**Date of Review:** 2026-01-30\n\n#### Current Medication List\n\n| Medication Name | Dosage | Frequency | Status |\n|---|---"
+    }
+  ],
+  "easl_guideline": [
+    {
+      "test": "EASL DILI diagnosis query",
+      "command": "What does EASL guideline say about DILI diagnosis?",
+      "success": true,
+      "response": "Question forwarded to EASL Interface. You will recieved the answer soon.",
+      "files": {
+        "initiate_iframe_payload.json": {
+          "patientId": "p0001",
+          "query": "Arthur Pendelton, a 54-year-old male with a history of alcoholic liver cirrhosis (Child-Pugh B), presents with decompensated liver disease. He has experienced a recent alcohol relapse, poor medication compliance, and currently presents with severe ascites, hepatic encephalopathy, jaundice, coagulopathy, and mild renal impairment. Laboratory findings include elevated ALT (110.0 U/L), AST (150.0 U/L), Total Bilirubin (6.8 mg/dL), and INR (2.1), with moderate hypoalbuminemia (2.2 g/dL). What does the EASL guideline say about DILI diagnosis?",
+          "metadata": {
+            "source": "voice"
+          }
+        },
+        "initiate_iframe_response.json": {
+          "success": true,
+          "message": "Query sent to EASL",
+          "query": "Arthur Pendelton, a 54-year-old male with a history of alcoholic liver cirrhosis (Child-Pugh B), presents with decompensated liver disease. He has experienced a recent alcohol relapse, poor medication compliance, and currently presents with severe ascites, hepatic encephalopathy, jaundice, coagulopathy, and mild renal impairment. Laboratory findings include elevated ALT (110.0 U/L), AST (150.0 U/L), Total Bilirubin (6.8 mg/dL), and INR (2.1), with moderate hypoalbuminemia (2.2 g/dL). What does the EASL guideline say about DILI diagnosis?",
+          "metadata": {
+            "source": "voice"
+          }
+        }
+      },
+      "note": "EASL answer displayed in iframe on canvas (not in terminal)"
+    },
+    {
+      "test": "EASL monitoring guidelines query",
+      "command": "What are EASL recommendations for liver function monitoring?",
+      "success": true,
+      "response": "Question forwarded to EASL Interface. You will recieved the answer soon.",
+      "files": {
+        "initiate_iframe_payload.json": {
+          "patientId": "p0001",
+          "query": "Arthur Pendelton, a 54-year-old male with a history of decompensated alcoholic liver cirrhosis, presents with recurrent ascites, confusion, jaundice, and poor medication compliance, accompanied by a recent alcohol relapse. Laboratory investigations reveal significantly elevated ALT (110.0 U/L), AST (150.0 U/L), and Total Bilirubin (6.8 mg/dL), along with an elevated INR (2.1), hypoalbuminemia (2.2 g/dL), and mild renal impairment (creatinine 1.3 mg/dL). He is currently managed with Lactulose, Furosemide, Propranolol, and other supportive medications. What are EASL recommendations for liver function monitoring?",
+          "metadata": {
+            "source": "voice"
+          }
+        },
+        "initiate_iframe_response.json": {
+          "success": true,
+          "message": "Query sent to EASL",
+          "query": "Arthur Pendelton, a 54-year-old male with a history of decompensated alcoholic liver cirrhosis, presents with recurrent ascites, confusion, jaundice, and poor medication compliance, accompanied by a recent alcohol relapse. Laboratory investigations reveal significantly elevated ALT (110.0 U/L), AST (150.0 U/L), and Total Bilirubin (6.8 mg/dL), along with an elevated INR (2.1), hypoalbuminemia (2.2 g/dL), and mild renal impairment (creatinine 1.3 mg/dL). He is currently managed with Lactulose, Furosemide, Propranolol, and other supportive medications. What are EASL recommendations for liver function monitoring?",
+          "metadata": {
+            "source": "voice"
+          }
+        }
+      },
+      "note": "EASL answer displayed in iframe on canvas (not in terminal)"
+    }
+  ],
+  "general_queries": [
+    {
+      "test": "Query patient diagnosis",
+      "command": "What is the patient's current diagnosis?",
+      "success": true,
+      "response": "The patient's current diagnosis is Decompensated Alcoholic Liver Cirrhosis with Ascites and Hepatic Encephalopathy.",
+      "answer_quality": "Good"
+    },
+    {
+      "test": "Query patient medications",
+      "command": "What medications is the patient taking?",
+      "success": true,
+      "response": "The patient is currently taking the following medications:\n\n*   Lisinopril 10 mg, Daily\n*   Metformin 500 mg, Twice Daily\n*   Atorvastatin 20 mg, Daily\n*   Omeprazole 40 mg, Daily\n*   Aspirin 81 mg, Daily\n*   Ibuprofen 200 mg, As Needed\n*   Lactulose 30ml, Daily (for Hepatic encephalopathy)\n*   Furosemide 20mg, Daily (for Ascites)\n*   Normal Saline 75 ml/hr (as of 2025-07-19, for Fluid resuscitation)\n*   Thiamine 100mg, Daily (for Alcoholic liver disease)\n*   Folic Acid 5mg, Daily (for Alcoholic liver disease)\n*   Propranolol 40mg, Daily (for Portal hypertension/varices prophylaxis)\n*   Sertraline 50mg, Daily (for Depression)",
+      "answer_quality": "Good"
+    },
+    {
+      "test": "Query lab results summary",
+      "command": "Summarize the patient's recent lab results",
+      "success": true,
+      "response": "The patient's recent lab results from 2025-10-28 show elevated Alanine Aminotransferase (ALT) at 88 U/L and Aspartate Aminotransferase (AST) at 71 U/L, both exceeding their reference ranges. Alkaline Phosphatase, Total Bilirubin, Albumin, Creatinine, and Blood Urea Nitrogen (BUN) levels are within normal limits. The elevated ALT and AST suggest possible hepatocellular injury.",
+      "answer_quality": "Good"
+    },
+    {
+      "test": "Query specific encounter details",
+      "command": "Tell me about encounter 2",
+      "success": true,
+      "response": "Encounter 2 is a Radiology Image. The image associated with this encounter is `patient_data_P0001_raw_data_encounter_report_1_2025-10-19.png`. This data comes from the EHR System.",
+      "answer_quality": "Good"
+    }
+  ],
+  "multi_patient": [
+    {
+      "patient": "p0001",
+      "success": true,
+      "response": "The patient's current diagnosis is Decompensated Alcoholic Liver Cirrhosis with Ascites and Hepatic Encephalopathy.",
+      "board_items_fetched": false
+    }
+  ],
+  "all_operations": [
+    {
+      "operation": "get_board_items",
+      "command": "Show me the board items",
+      "success": true,
+      "check_instruction": "URL includes /api/board-items/p"
+    },
+    {
+      "operation": "focus_item",
+      "command": "Show me encounter 2",
+      "success": true,
+      "check_instruction": "Focus payload includes patientId"
+    },
+    {
+      "operation": "create_todo",
+      "command": "Create task to analyze data",
+      "success": true,
+      "check_instruction": "Todo payload includes patientId"
+    },
+    {
+      "operation": "initiate_easl_iframe",
+      "command": "What does EASL say about DILI?",
+      "success": true,
+      "check_instruction": "EASL payload includes patientId"
+    }
+  ]
+}

@@ -25,7 +25,18 @@ for o in object_desc:
 def board_items_process(data):
     exclude_keys = ["x","y","width","height","createdAt","updatedAt","color","rotation", "draggable"]
     clean_data = []
+    
+    # Validate input is a list
+    if not isinstance(data, list):
+        print(f"⚠️ board_items_process received non-list: {type(data)}")
+        return []
+    
     for item in data:
+        # Skip non-dict items
+        if not isinstance(item, dict):
+            print(f"⚠️ Skipping non-dict item: {type(item)}")
+            continue
+            
         if item.get('type') == 'ehrHub' or item.get('type') == 'zone' or item.get('type') == 'button':
             pass
         else:   
@@ -57,7 +68,7 @@ def board_items_process(data):
     return clean_data
 
 def get_board_items():
-    patient_id = patient_manager.get_patient_id()
+    patient_id = patient_manager.get_patient_id().lower()
     url = BASE_URL + f"/api/board-items/{patient_id}"
     data = []
     
@@ -69,6 +80,17 @@ def get_board_items():
         if response.status_code == 200:
             try:
                 data = response.json()
+                
+                # Handle new API format: {"patientId": "...", "items": [...]}
+                if isinstance(data, dict) and 'items' in data:
+                    print(f"✅ New API format detected, extracting items")
+                    data = data['items']
+                
+                # Validate response is a list
+                if not isinstance(data, list):
+                    print(f"⚠️ API returned non-list data: {type(data)}")
+                    raise ValueError("Expected list, got " + str(type(data)))
+                
                 data = board_items_process(data)
                 # Save to cache
                 os.makedirs(config.output_dir, exist_ok=True)
@@ -76,10 +98,12 @@ def get_board_items():
                     json.dump(data, f, indent=4)
                 print(f"✅ Fetched {len(data)} items from API")
                 return data
-            except json.JSONDecodeError:
-                print(f"❌ Invalid JSON response from API. Text: {response.text[:100]}...")
+            except (json.JSONDecodeError, ValueError, KeyError) as e:
+                print(f"❌ Invalid JSON response from API: {e}")
+                print(f"   Response text: {response.text[:200]}...")
         else:
             print(f"⚠️ API Error: Status {response.status_code}")
+            print(f"   Response: {response.text[:200]}...")
             
     except Exception as e:
         print(f"⚠️ API Connection failed: {e}")

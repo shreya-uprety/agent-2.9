@@ -1,68 +1,72 @@
 {
-    "id": "enhanced-todo-1765423144353-7hid104og",
+    "id": "enhanced-todo-1769754111790-kfu5jbp36",
     "type": "todo",
     "x": 5860,
-    "y": -2240,
+    "y": -5040,
     "width": 450,
     "height": "auto",
     "color": "#ffffff",
-    "description": "Retrieve radiology diagnostic reports for Sarah Miller to facilitate clinical review. The process involves preparing specific retrieval parameters, executing a detailed API call, and validating the returned data.",
+    "description": "Analyze provided data to extract insights and trends.",
     "todoData": {
-        "title": "Radiology Data Retrieval for Sarah Miller",
-        "description": "Retrieve radiology diagnostic reports for Sarah Miller to facilitate clinical review. The process involves preparing specific retrieval parameters, executing a detailed API call, and validating the returned data.",
+        "title": "Data Analysis Task",
+        "description": "Analyze provided data to extract insights and trends.",
         "todos": [
             {
-                "id": "task-prep-rad-data",
-                "text": "Prepare radiology retrieval parameters for Sarah Miller",
+                "id": "task-001",
+                "text": "Prepare data for analysis",
                 "status": "pending",
                 "agent": "Data Analyst Agent",
                 "subTodos": [
                     {
-                        "text": "Confirm patient identifier for Sarah Miller",
+                        "text": "Identify data sources",
                         "status": "pending"
                     },
                     {
-                        "text": "Determine correct category code for radiology (e.g., LP29684-5)",
+                        "text": "Clean and preprocess data",
                         "status": "pending"
                     },
                     {
-                        "text": "Set modality filters (e.g., CT, MRI, X-Ray)",
-                        "status": "pending"
-                    },
-                    {
-                        "text": "Apply status filter (e.g., final)",
-                        "status": "pending"
-                    },
-                    {
-                        "text": "Set date filters or sorting preferences",
-                        "status": "pending"
-                    },
-                    {
-                        "text": "Verify authentication token for API access",
+                        "text": "Validate data integrity",
                         "status": "pending"
                     }
                 ]
             },
             {
-                "id": "task-fetch-rad-data",
-                "text": "curl -X GET 'https://api.bedfordshirehospitals.nhs.uk/fhir-prd/r4/DiagnosticReport?patient=--PATIENT_ID--&category=http://loinc.org|LP29684-5&status=final&_sort=-date'",
+                "id": "task-002",
+                "text": "Perform data analysis",
+                "status": "pending",
+                "agent": "Data Analyst Agent",
+                "subTodos": [
+                    {
+                        "text": "Apply statistical methods",
+                        "status": "pending"
+                    },
+                    {
+                        "text": "Identify patterns and trends",
+                        "status": "pending"
+                    },
+                    {
+                        "text": "Generate visualizations",
+                        "status": "pending"
+                    }
+                ]
+            },
+            {
+                "id": "task-003",
+                "text": "Consolidate analysis results",
                 "status": "pending",
                 "agent": "Consolidator Agent",
                 "subTodos": [
                     {
-                        "text": "Execute HTTP request with prepared parameters",
+                        "text": "Summarize key findings",
                         "status": "pending"
                     },
                     {
-                        "text": "Check HTTP status code of the response",
+                        "text": "Document methodology and results",
                         "status": "pending"
                     },
                     {
-                        "text": "Validate response JSON structure",
-                        "status": "pending"
-                    },
-                    {
-                        "text": "Extract and organize radiology report data",
+                        "text": "Prepare final report",
                         "status": "pending"
                     }
                 ]
@@ -70,6 +74,6 @@
         ]
     },
     "rotation": 0,
-    "createdAt": "2025-12-11T03:19:04.670Z",
-    "updatedAt": "2025-12-11T03:19:04.670Z"
+    "createdAt": "2026-01-30T06:21:52.177Z",
+    "updatedAt": "2026-01-30T06:21:52.177Z"
 }

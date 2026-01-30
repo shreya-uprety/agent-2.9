@@ -64,18 +64,18 @@ def run_all_tests():
         current = test_get_current_patient()
         original_patient = current['patientId']
         
-        # Test 2: Switch to P0002
-        test_switch_patient("P0002")
+        # Test 2: Switch to p0002
+        test_switch_patient("p0002")
         
         # Verify switch
         new_patient = test_get_current_patient()
-        assert new_patient['patientId'] == "P0002", "Patient switch failed!"
+        assert new_patient['patientId'] == "p0002", "Patient switch failed!"
         print("\n✅ Patient switch verified!")
         
-        # Test 3: Switch to P0003
-        test_switch_patient("P0003")
+        # Test 3: Switch to p0003
+        test_switch_patient("p0003")
         
-        # Test 4: Send chat (should use P0003)
+        # Test 4: Send chat (should use p0003)
         test_chat_with_patient()
         
         # Restore original patient

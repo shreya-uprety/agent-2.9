@@ -123,26 +123,14 @@ async def resolve_object_id(query: str, context: str=""):
     )
 
     result = json.loads(resp.text)
-
-    # Optional logging:
-    # print("Resolver Output:", result)
-    lower_q = query.lower()
-    if 'evidence' in lower_q and 'blood' in lower_q and 'cirrhosis' in lower_q :
-        result['objectId'] = 'raw-ice-lab-data-encounter-3'
-    elif 'avail' in lower_q and 'clinic' in lower_q:
-        result['objectId'] = 'dashboard-item-1759853783245-patient-context'
-    elif 'invasive' in lower_q and 'screen ' in lower_q:
-        result['objectId'] = 'dashboard-item-1759906300004-single-encounter-3'
-    elif 'history' in lower_q and 'drug ' in lower_q:
-        result['objectId'] = 'medication-track-1'
-    elif 'investigation' in lower_q and 'outstanding' in lower_q:
-        result['objectId'] = 'dashboard-item-1759906300004-single-encounter-7'
-    elif 'probability' in lower_q:
-        result['objectId'] = 'dashboard-item-1759906246157-differential-diagnosis'
+    
+    # RAG system already found the best matching object ID from board items
+    # No need for hardcoded mappings - use whatever is on the board dynamically
+    print(f"🎯 Resolved object ID: {result.get('objectId')}")
         
     ### CANVAS ACTION HERE
     focus_res = await canvas_ops.focus_item(result.get("objectId"))
-    print("Focus second :", (result.get("objectId")))
+    print(f"Focus action result: {result.get('objectId')}")
 
     print(f"  🎯 Navigation completed", focus_res)
     return result
@@ -223,6 +211,7 @@ async def trigger_easl(question):
     )
     await asyncio.sleep(random.uniform(0.5, 1.5))
     easl_status = await canvas_ops.initiate_easl_iframe(easl_q)
+    print(f"  📤 EASL Question sent: {easl_q[:100]}...")
     for i in range(2):
         await canvas_ops.update_todo(
             {
@@ -242,21 +231,28 @@ async def trigger_easl(question):
         }
     )
     print("iframe status:", easl_status)
+    print(f"  ✅ EASL query successfully sent to iframe")
+    print(f"  📋 Note: EASL answer will be displayed in the iframe on the canvas")
     iframe_id = "iframe-item-easl-interface"
     await canvas_ops.focus_item(iframe_id)
-    print(f"  ✅ EASL Answer completed")
+    print(f"  🎯 Focused on EASL iframe: {iframe_id}")
     return 
 
 
 async def load_ehr():
     print("Start load_ehr")
-    patient_id = patient_manager.get_patient_id()
+    patient_id = patient_manager.get_patient_id().lower()
     url = BASE_URL + f"/api/board-items/{patient_id}"
     
     async with httpx.AsyncClient(timeout=10) as client:
         response = await client.get(url)
         data = response.json()
         print("Status code:", response.status_code)
+        
+        # Handle new API format: {"patientId": "...", "items": [...]}
+        if isinstance(data, dict) and 'items' in data:
+            data = data['items']
+        
         content_object = []
         else_object = []
         for d in data:
@@ -502,6 +498,8 @@ async def _handle_agent_processing(action_data, todo_obj):
         agent_res['zone'] = "raw-ehr-data-zone"
         create_agent_res = await canvas_ops.create_result(agent_res)
         print(f"  ✅ Analysis completed")
+        print(f"  📝 Result posted to canvas with ID: {create_agent_res.get('id')}")
+        print(f"  📊 Result content length: {len(agent_res.get('content', ''))} characters")
         
         
             

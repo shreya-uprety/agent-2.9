@@ -1,8 +1,8 @@
 {
-    "id": "enhanced-todo-1765423182792-b714r8jeh",
+    "id": "enhanced-todo-1769754121411-xvhdf7sx8",
     "type": "todo",
-    "x": 6330,
-    "y": -2240,
+    "x": 5860,
+    "y": -5040,
     "width": 450,
     "height": "auto",
     "color": "#ffffff",
@@ -18,7 +18,7 @@
                 "agent": "Data Analyst Agent",
                 "subTodos": [
                     {
-                        "text": "Base question : What is the DILI diagnosis according to EASL guidelines?",
+                        "text": "Base question : What does EASL say about DILI?",
                         "status": "executing"
                     },
                     {
@@ -46,6 +46,6 @@
         ]
     },
     "rotation": 0,
-    "createdAt": "2025-12-11T03:19:43.102Z",
-    "updatedAt": "2025-12-11T03:19:43.102Z"
+    "createdAt": "2026-01-30T06:22:01.684Z",
+    "updatedAt": "2026-01-30T06:22:01.684Z"
 }

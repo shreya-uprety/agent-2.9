@@ -9,7 +9,7 @@
             "agent": "Data Analyst Agent",
             "subTodos": [
                 {
-                    "text": "Base question : What is the DILI diagnosis according to EASL guidelines?",
+                    "text": "Base question : What does EASL say about DILI?",
                     "status": "executing"
                 },
                 {
@@ -34,5 +34,6 @@
                 }
             ]
         }
-    ]
+    ],
+    "patientId": "p0001"
 }
